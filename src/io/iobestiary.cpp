@@ -249,7 +249,7 @@ charmRune_t IOBestiary::getCharmFromTarget(Player* player, MonsterType* mtype)
 
 	for (charmRune_t it : usedRunes) {
 		Charm* charm = getBestiaryCharm(it);
-		if (bestiaryEntry == player->parseRacebyCharm(charm->id, false, 0)) {
+		if (charm && bestiaryEntry == player->parseRacebyCharm(charm->id, false, 0)) {
 			return charm->id;
 		}
 	}

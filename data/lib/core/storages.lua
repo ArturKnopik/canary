@@ -6,7 +6,7 @@ Reserved player action storage key ranges (const.hpp)
 	[10000000 - 20000000]
 	[1000 - 1500]
 	[2001 - 2011]
-
+	[31000 - 31021] - level 3 imbuing storage
 	Others reserved player action/storages
 	[100] = unmoveable/untrade/unusable items
 	[101] = use pick floor
@@ -37,7 +37,32 @@ Storage = {
 	DelayLargeSeaShell = 30002,
 	Promotion = 30003,
 	PetSummonEvent10 = 30004,
-	PetSummonEvent60 = 30005
+	PetSummonEvent60 = 30005,
+	Imbuing = 
+	{
+		LichShroud = 31000,
+		Reap = 31001,
+		Vampirism = 31002,
+		CloudFabric = 31003,
+		Electrify = 31004,
+		Swiftness = 31005,
+		SnakeSkin = 31006,
+		Venom = 31007,
+		Slash = 31008,
+		Chop = 31009,
+		Bash = 31010,
+		DragonHide = 31011,
+		Scorch = 31012,
+		Void = 31013,
+		QuaraScale = 31014,
+		Frost = 31015,
+		Blockade = 31016,
+		DemonPresence = 31017,
+		Precision = 31018,
+		Strike = 31019,
+		Epiphany = 31020,
+		Featherweight = 31021
+	}
 }
 
 GlobalStorage = {

@@ -138,6 +138,7 @@ class ConfigFunctions final : LuaScriptInterface {
 
 			registerEnumIn(L, "configKeys", STAMINA_TRAINER)
 			registerEnumIn(L, "configKeys", STAMINA_PZ)
+			registerEnumIn(L, "configKeys", ENABLE_ALL_IMBUING_LEVELS)
 			registerEnumIn(L, "configKeys", STAMINA_ORANGE_DELAY)
 			registerEnumIn(L, "configKeys", STAMINA_GREEN_DELAY)
 			registerEnumIn(L, "configKeys", STAMINA_TRAINER_DELAY)

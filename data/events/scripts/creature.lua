@@ -7,6 +7,10 @@ function Creature:onAreaCombat(tile, isAggressive)
 end
 
 function Creature:onTargetCombat(target)
+	if not self then
+		return true
+	end
+	
 	if self:isPlayer() then
 		if target and target:getName() == staminaBonus.target then
 			local playerId = self:getId()

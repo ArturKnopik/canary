@@ -181,6 +181,8 @@ bool ConfigManager::load()
 	boolean[STAMINA_TRAINER] = getGlobalBoolean(L, "staminaTrainer", false);
 	boolean[STAMINA_PZ] = getGlobalBoolean(L, "staminaPz", false);
 
+	boolean[ENABLE_ALL_IMBUING_LEVELS] = getGlobalBoolean(L, "enableAllImbuingLevels", false);
+
 	boolean[ONLY_PREMIUM_ACCOUNT] = getGlobalBoolean(L, "onlyPremiumAccount", false);
 
 	string[DEFAULT_PRIORITY] = getGlobalString(L, "defaultPriority", "high");
