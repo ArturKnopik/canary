@@ -9,14 +9,14 @@
 
 #include "pch.hpp"
 
-#include "creatures/combat/combat.h"
-#include "game/game.h"
+#include "creatures/combat/combat.hpp"
+#include "game/game.hpp"
 #include "lua/functions/creatures/combat/combat_functions.hpp"
 #include "lua/scripts/lua_environment.hpp"
 
 int CombatFunctions::luaCombatCreate(lua_State* L) {
 	// Combat()
-	pushUserdata<Combat>(L, g_luaEnvironment.createCombatObject(getScriptEnv()->getScriptInterface()).get());
+	pushUserdata<Combat>(L, g_luaEnvironment().createCombatObject(getScriptEnv()->getScriptInterface()).get());
 	setMetatable(L, -1, "Combat");
 	return 1;
 }
@@ -67,7 +67,7 @@ int CombatFunctions::luaCombatSetArea(lua_State* L) {
 		return 1;
 	}
 
-	const AreaCombat* area = g_luaEnvironment.getAreaObject(getNumber<uint32_t>(L, 2));
+	const AreaCombat* area = g_luaEnvironment().getAreaObject(getNumber<uint32_t>(L, 2));
 	if (!area) {
 		reportErrorFunc(getErrorDesc(LUA_ERROR_AREA_NOT_FOUND));
 		lua_pushnil(L);
@@ -143,8 +143,8 @@ int CombatFunctions::luaCombatExecute(lua_State* L) {
 	}
 
 	if (isUserdata(L, 2)) {
-		LuaDataType type = getUserdataType(L, 2);
-		if (type != LuaData_Player && type != LuaData_Monster && type != LuaData_Npc) {
+		LuaData_t type = getUserdataType(L, 2);
+		if (type != LuaData_t::Player && type != LuaData_t::Monster && type != LuaData_t::Npc) {
 			pushBoolean(L, false);
 			return 1;
 		}
@@ -153,6 +153,9 @@ int CombatFunctions::luaCombatExecute(lua_State* L) {
 	Creature* creature = getCreature(L, 2);
 
 	const LuaVariant &variant = getVariant(L, 3);
+	combat->setInstantSpellName(variant.instantName);
+	combat->setRuneSpellName(variant.runeName);
+	bool result = true;
 	switch (variant.type) {
 		case VARIANT_NUMBER: {
 			Creature* target = g_game().getCreatureByID(variant.number);
@@ -170,15 +173,15 @@ int CombatFunctions::luaCombatExecute(lua_State* L) {
 		}
 
 		case VARIANT_POSITION: {
-			combat->doCombat(creature, variant.pos);
+			result = combat->doCombat(creature, variant.pos);
 			break;
 		}
 
 		case VARIANT_TARGETPOSITION: {
 			if (combat->hasArea()) {
-				combat->doCombat(creature, variant.pos);
+				result = combat->doCombat(creature, variant.pos);
 			} else {
-				combat->postCombatEffects(creature, variant.pos);
+				combat->postCombatEffects(creature, creature->getPosition(), variant.pos);
 				g_game().addMagicEffect(variant.pos, CONST_ME_POFF);
 			}
 			break;
@@ -191,7 +194,7 @@ int CombatFunctions::luaCombatExecute(lua_State* L) {
 				return 1;
 			}
 
-			combat->doCombat(creature, target);
+			result = combat->doCombat(creature, target);
 			break;
 		}
 
@@ -206,6 +209,6 @@ int CombatFunctions::luaCombatExecute(lua_State* L) {
 		}
 	}
 
-	pushBoolean(L, true);
+	pushBoolean(L, result);
 	return 1;
 }

@@ -7,12 +7,19 @@
  * Website: https://docs.opentibiabr.com/
  */
 
-#ifndef SRC_PCH_HPP_
-#define SRC_PCH_HPP_
+#pragma once
 
-// Definitions should be global.
-#include "utils/definitions.h"
+// --------------------
+// Internal Includes
+// --------------------
+
+// Utils
+#include "utils/definitions.hpp"
 #include "utils/simd.hpp"
+
+// --------------------
+// STL Includes
+// --------------------
 
 #include <bitset>
 #include <charconv>
@@ -21,54 +28,120 @@
 #include <forward_list>
 #include <list>
 #include <map>
+#include <queue>
 #include <random>
 #include <ranges>
 #include <regex>
 #include <set>
-#include <queue>
+#include <thread>
 #include <vector>
 #include <variant>
 
+// --------------------
+// System Includes
+// --------------------
+
 #ifdef _WIN32
-	#include <io.h> // Para _isatty() no Windows
+	#include <io.h> // For _isatty() on Windows
 	#define isatty _isatty
 	#define STDIN_FILENO _fileno(stdin)
 #else
-	#include <unistd.h> // Para isatty() no Linux e outros sistemas POSIX
+	#include <unistd.h> // For isatty() on Linux and other POSIX systems
 #endif
 
 #ifdef OS_WINDOWS
-	#include "conio.h"
+	#include <conio.h>
 #endif
 
-#if __has_include("gitmetadata.h")
-	#include "gitmetadata.h"
-#endif
+// --------------------
+// Third Party Includes
+// --------------------
 
+// ABSL
+#include <absl/numeric/int128.h>
+
+// ARGON2
+#include <argon2.h>
+
+// ASIO
 #include <asio.hpp>
+
+// CURL
 #include <curl/curl.h>
+
+// FMT
 #include <fmt/chrono.h>
+#include <fmt/core.h>
+#include <fmt/format.h>
+#include <fmt/args.h>
+
+// GMP
 #include <gmp.h>
+
+// JSON
 #include <json/json.h>
+
+// LUA
 #if __has_include("luajit/lua.hpp")
 	#include <luajit/lua.hpp>
 #else
 	#include <lua.hpp>
 #endif
+
+#include "lua/global/shared_object.hpp"
+
+// Magic Enum
 #include <magic_enum.hpp>
+
+// Memory Mapped File
 #include <mio/mmap.hpp>
+
+// MySQL
 #if __has_include("<mysql.h>")
 	#include <mysql.h>
 #else
 	#include <mysql/mysql.h>
 #endif
+
 #include <mysql/errmsg.h>
-#include <spdlog/spdlog.h>
+
+// Parallel Hash Map
 #include <parallel_hashmap/phmap.h>
+#include <parallel_hashmap/btree.h>
+
+// PugiXML
 #include <pugixml.hpp>
+
+// Zlib
 #include <zlib.h>
+
+#include <boost/di.hpp>
+
+// -------------------------
+// GIT Metadata Includes
+// -------------------------
+
+#if __has_include("gitmetadata.h")
+	#include "gitmetadata.h"
+#endif
+
+// ---------------------
+// Standard STL Includes
+// ---------------------
 
 #include <string>
 #include <iostream>
 
-#endif // SRC_PCH_HPP_
+/**
+ * Static custom libraries that can be pre-compiled like DI and messaging
+ */
+#include "lib/messaging/message.hpp"
+#include "lib/messaging/command.hpp"
+#include "lib/messaging/event.hpp"
+
+#include <eventpp/utilities/scopedremover.h>
+#include <eventpp/eventdispatcher.h>
+
+#include "lib/di/container.hpp"
+
+#include "lua/global/shared_object.hpp"

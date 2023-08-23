@@ -7,6 +7,11 @@ dataPackDirectory = "data-otservbr-global"
 -- Don't change this unless you know what you're doing
 coreDirectory = "data"
 
+-- Set log level
+-- It can be trace, debug, info, warning, error, critical, off (default: info).
+-- NOTE: Will only display logs with level higher or equal the one set.
+logLevel = "debug"
+
 -- Combat settings
 -- NOTE: valid values for worldType are: "pvp", "no-pvp" and "pvp-enforced"
 worldType = "pvp"
@@ -123,10 +128,46 @@ boostedBossSlot = true
 boostedBossLootBonus = 250
 boostedBossKillBonus = 3
 
+-- Hazard system
+toogleHazardSystem = true
+hazardCriticalInterval = 2000
+hazardCriticalChance = 750
+hazardCriticalMultiplier = 25
+hazardDamageMultiplier = 200
+hazardDodgeMultiplier = 85
+hazardPodsDropMultiplier = 87
+hazardPodsTimeToDamage = 2000
+hazardPodsTimeToSpawn = 4000
+hazardExpBonusMultiplier = 2
+hazardLootBonusMultiplier = 2
+hazardPodsDamage = 5
+hazardSpawnPlunderMultiplier = 25
+
+-- Loyalty system
+loyaltyEnabled = true
+loyaltyPointsPerCreationDay = 1
+loyaltyPointsPerPremiumDaySpent = 0
+loyaltyPointsPerPremiumDayPurchased = 0
+loyaltyBonusPercentageMultiplier = 1.0
+
+-- Wheel of destiny system
+-- NOTE: set wheelSystemEnabled = false to disable the wheel of destiny
+-- NOTE: only the wheel points are modified, all other data is on the client executable and cannot be modified
+wheelSystemEnabled = true
+wheelPointsPerLevel = 1
+
 -- Familiar system
 -- NOTE: the time will be divided by 2 to get half the value, the familiar lasts 15 minutes by default and the cooldown of the spell is 30 minutes
 -- Only change it here if you know what you are doing or to make testing easier with familiars
 familiarTime = 30
+
+partyShareLootBoosts = false
+partyShareLootBoostsDimishingFactor = 0.7
+
+-- Tibiadrome concoctions
+tibiadromeConcoctionCooldown = 24 * 60 * 60 -- 24 hours
+tibiadromeConcoctionDuration = 60 * 60 -- 1 hour
+tibiadromeConcoctionTickType = "online" -- "online" | "experience"
 
 -- NOTE: Access only for Premium Account
 onlyPremiumAccount = false
@@ -139,8 +180,12 @@ onlyPremiumAccount = false
 -- NOTE: depotChest, the non-stackable items will be moved to the selected depot chest(I - XVIII).
 -- NOTE: autoBank = true, the dropped coins from monsters will be automatically deposited to your bank account.
 -- NOTE: toggleGoldPouchAllowAnything will allow players to move items or gold to gold pouch
+-- NOTE: toggleGoldPouchQuickLootOnly will ONLY allow quickloot to move items to gold pouch
 -- NOTE: toggleServerIsRetroPVP will make this server as retro, setting PARTY_PROTECTION and ADVANCED_SECURE_MODE to 0
 -- NOTE: toggleTravelsFree will make all travels from boat free
+-- NOTE: buyAolCommandFee will add fee when player buy aol by command (!aol), active changing value more than 0 (fee value. ex: 1 = 1gp  aol will be 50001)
+-- NOTE: buyBlessCommandFee will add fee when player buy bless by command (!bless), active changing value between 1 and 100 (fee percent. ex: 3 = 3%, 30 = 30%)
+-- NOTE: teleportPlayerToVocationRoom will enable oressa to teleport player to his/her room vocation
 weatherRain = false
 thunderEffect = false
 allConsoleLog = false
@@ -149,8 +194,12 @@ depotChest = 4
 autoLoot = false
 autoBank = false
 toggleGoldPouchAllowAnything = false
+toggleGoldPouchQuickLootOnly = false
 toggleServerIsRetroPVP = false
 toggleTravelsFree = false
+buyAolCommandFee = 0
+buyBlessCommandFee = 0
+teleportPlayerToVocationRoom = true
 
 -- Teleport summon
 -- Set to true will never remove the summon
@@ -254,6 +303,21 @@ mysqlPort = 3306
 mysqlSock = ""
 passwordType = "sha1"
 
+-- NOTE: memoryConst: This is the memory cost for the Argon2 hash algorithm. It specifies the amount of memory that the algorithm will use when calculating a hash.
+--The memory cost is measured in units of KiB (1024 bytes). A higher memory cost makes the algorithm more resistant to brute-force and hash-table attacks, but also consumes more memory.
+-- NOTE: temporaryConst: This is the time cost for the Argon2 hash algorithm. It specifies the amount of computational time that the algorithm will spend when calculating a hash.
+--A higher time cost makes the algorithm more secure but also slower.
+-- NOTE: parallelism: This is the parallelism factor for the Argon2 hash algorithm. It specifies the number of parallel threads that the algorithm will use when calculating a hash.
+--In general, a higher level of parallelism can make the algorithm faster on systems with multiple CPU cores, but it can also increase memory usage.
+-- NOTE: These settings have to be the same on the site and server.
+memoryConst = "1<<16"
+temporaryConst= 2
+parallelism = 2
+
+-- Session Auth
+authType = "password" -- 'session' | 'password'
+resetSessionsOnStartup = false
+
 -- Misc.
 -- NOTE: experienceDisplayRates: set to false to ignore exp rate or true to include exp rate
 allowChangeOutfit = true
@@ -271,6 +335,12 @@ criticalChance = 10
 inventoryGlowOnFiveBless = false
 adventurersBlessingLevel = 21
 experienceDisplayRates = true
+-- configure attack base on Fist Fighting skill/experience
+-- multiplierSpeedOnFist * 5  (multiplies the value obtained from the player fist skill and multiplies it * 5) max 25 is recommended due minTicks limits else player stop attack
+-- maxSpeedOnFist 500 miliseconds  (The maximum attack speed that can be obtained no matter how high the player has the Fist Fighting skill.)
+toggleAttackSpeedOnFist = false
+multiplierSpeedOnFist = 5
+maxSpeedOnFist = 500
 
 -- Global server Save
 -- NOTE: globalServerSaveNotifyDuration in minutes
@@ -291,7 +361,9 @@ sortLootByChance = false
 -- Rates
 -- NOTE: rateExp, rateSkill and rateMagic is used when 'rateUseStages = false' - or a fallback only
 -- To configure rates see file data/stages.lua
+-- lowLevelBonusExp works up to level 50
 rateUseStages = false
+lowLevelBonusExp = 50
 rateExp = 1
 rateSkill = 1
 rateLoot = 1
@@ -319,6 +391,14 @@ rateExerciseTrainingSpeed = rateAttackSpeed
 rateMonsterHealth = 1.0
 rateMonsterAttack = 1.0
 rateMonsterDefense = 1.0
+
+-- Boss rates
+rateBossHealth = 1.0
+rateBossAttack = 1.0
+rateBossDefense = 1.0
+
+bossDefaultTimeToFightAgain = 20 * 60 * 60 -- 20 hours
+bossDefaultTimeToDefeat = 20 * 60 -- 20 minutes
 
 -- Monsters
 deSpawnRange = 2
@@ -348,3 +428,28 @@ location = "South America"
 -- Leave empty if you wish to disable.
 discordWebhookURL = ""
 
+-- Vip System (Get more info in: https://github.com/opentibiabr/canary/pull/1063)
+-- NOTE: set vipSystemEnabled to true to enable the vip system functionalities (this overrides premium checks)
+-- NOTE: vipBonusExp = 0 is deactivated, active changing value between 1 and 100 (percent xp bonus to gain. ex: 3 = 3%, 30 = 30%)
+-- NOTE: vipBonusLoot = 0 is deactivated, active changing value between 1 and 100 (percent loot bonus to gain. ex: 3 = 3%, 30 = 30%)
+-- NOTE: vipBonusSkill = 0 is deactivated, active changing value between 1 and 100 (percent skill bonus to gain. ex: 3 = 3%, 30 = 30%)
+-- NOTE: vipAutoLootVipOnly = activates only vip to get automatic loot, config 'autoLoot' need to be enabled, for this config works
+-- NOTE: vipStayOnline = when this config is activated, players vip will not be kicked after 'kickIdlePlayerAfterMinutes' config
+-- NOTE: vipFamiliarTimeCooldownReduction = the minutes that will be debited from the familiar time cooldown for vip accounts, use 0 to deactivate the reduction (the default maximum value is 15, but it is calculated automatically)
+-- 		examples: The default config 'familiarTime' is 30, this value is divided by 2 (15 minutes familiar and 15 minutes to cooldown)
+-- 		If you use 'vipFamiliarTimeCooldownReduction = 10' the vip players will have only, in this case, 5 minutes of cooldown.
+-- 		If you use 'vipFamiliarTimeCooldownReduction' greater than half of 'familiarTime', it will get the highest possible value, in this case 15
+-- NOTE: GainCoin function, please configure script: data-otservbr-global/scripts/globalevents/vip/online_coins.lua
+-- NOTE: GainToken function, please configure script: data-otservbr-global/scripts/globalevents/vip/online_tokens.lua
+vipSystemEnabled = false
+vipBonusExp = 0
+vipBonusLoot = 0
+vipBonusSkill = 0
+vipAutoLootVipOnly = false
+vipStayOnline = false
+vipFamiliarTimeCooldownReduction = 0
+
+-- NOTE: set rewardChestCollectEnabled to true to enable the reward collect system
+-- NOTE set rewardChestMaxCollectItems max items per collect action
+rewardChestCollectEnabled = true
+rewardChestMaxCollectItems = 200

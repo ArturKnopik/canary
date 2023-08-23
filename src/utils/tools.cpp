@@ -10,10 +10,11 @@
 #include "pch.hpp"
 
 #include "core.hpp"
-#include "utils/tools.h"
+#include "items/item.hpp"
+#include "utils/tools.hpp"
 
 void printXMLError(const std::string &where, const std::string &fileName, const pugi::xml_parse_result &result) {
-	SPDLOG_ERROR("[{}] Failed to load {}: {}", where, fileName, result.description());
+	g_logger().error("[{}] Failed to load {}: {}", where, fileName, result.description());
 
 	FILE* file = fopen(fileName.c_str(), "rb");
 	if (!file) {
@@ -48,16 +49,16 @@ void printXMLError(const std::string &where, const std::string &fileName, const 
 	} while (bytes == 32768);
 	fclose(file);
 
-	SPDLOG_ERROR("Line {}:", currentLine);
-	SPDLOG_ERROR("{}", line);
+	g_logger().error("Line {}:", currentLine);
+	g_logger().error("{}", line);
 	for (size_t i = 0; i < lineOffsetPosition; i++) {
 		if (line[i] == '\t') {
-			SPDLOG_ERROR("\t");
+			g_logger().error("\t");
 		} else {
-			SPDLOG_ERROR(" ");
+			g_logger().error(" ");
 		}
 	}
-	SPDLOG_ERROR("^");
+	g_logger().error("^");
 }
 
 static uint32_t circularShift(int bits, uint32_t value) {
@@ -189,7 +190,7 @@ std::string transformToSHA1(const std::string &input) {
 uint16_t getStashSize(StashItemList itemList) {
 	uint16_t size = 0;
 	for (auto item : itemList) {
-		size += ceil(item.second / 100.0);
+		size += ceil(item.second / (float_t)Item::items[item.first].stackSize);
 	}
 	return size;
 }
@@ -239,14 +240,12 @@ std::string generateToken(const std::string &key, uint32_t ticks) {
 }
 
 void replaceString(std::string &str, const std::string &sought, const std::string &replacement) {
-	size_t pos = 0;
-	size_t start = 0;
-	size_t soughtLen = sought.length();
-	size_t replaceLen = replacement.length();
+	if (str.empty()) {
+		return;
+	}
 
-	while ((pos = str.find(sought, start)) != std::string::npos) {
-		str = str.substr(0, pos) + replacement + str.substr(pos + soughtLen);
-		start = pos + replaceLen;
+	for (size_t startPos = 0; (startPos = str.find(sought, startPos)) != std::string::npos; startPos += replacement.length()) {
+		str.replace(startPos, sought.length(), replacement);
 	}
 }
 
@@ -270,6 +269,78 @@ std::string asLowerCaseString(std::string source) {
 std::string asUpperCaseString(std::string source) {
 	std::transform(source.begin(), source.end(), source.begin(), toupper);
 	return source;
+}
+
+std::string toCamelCase(const std::string &str) {
+	std::string result;
+	bool capitalizeNext = false;
+
+	for (char ch : str) {
+		if (ch == '_' || std::isspace(ch) || ch == '-') {
+			capitalizeNext = true;
+		} else {
+			if (capitalizeNext) {
+				result += std::toupper(ch);
+				capitalizeNext = false;
+			} else {
+				result += std::tolower(ch);
+			}
+		}
+	}
+
+	return result;
+}
+
+std::string toPascalCase(const std::string &str) {
+	std::string result;
+	bool capitalizeNext = true;
+
+	for (char ch : str) {
+		if (ch == '_' || std::isspace(ch) || ch == '-') {
+			capitalizeNext = true;
+		} else {
+			if (capitalizeNext) {
+				result += std::toupper(ch);
+				capitalizeNext = false;
+			} else {
+				result += std::tolower(ch);
+			}
+		}
+	}
+
+	return result;
+}
+
+std::string toSnakeCase(const std::string &str) {
+	std::string result;
+	for (char ch : str) {
+		if (std::isupper(ch)) {
+			result += '_';
+			result += std::tolower(ch);
+		} else if (std::isspace(ch) || ch == '-') {
+			result += '_';
+		} else {
+			result += ch;
+		}
+	}
+
+	return result;
+}
+
+std::string toKebabCase(const std::string &str) {
+	std::string result;
+	for (char ch : str) {
+		if (std::isupper(ch)) {
+			result += '-';
+			result += std::tolower(ch);
+		} else if (std::isspace(ch) || ch == '_') {
+			result += '-';
+		} else {
+			result += ch;
+		}
+	}
+
+	return result;
 }
 
 StringVector explodeString(const std::string &inString, const std::string &separator, int32_t limit /* = -1*/) {
@@ -350,7 +421,7 @@ std::string formatDate(time_t time) {
 	try {
 		return fmt::format("{:%d/%m/%Y %H:%M:%S}", fmt::localtime(time));
 	} catch (const std::out_of_range &exception) {
-		SPDLOG_ERROR("Failed to format date with error code {}", exception.what());
+		g_logger().error("Failed to format date with error code {}", exception.what());
 	}
 	return {};
 }
@@ -359,9 +430,25 @@ std::string formatDateShort(time_t time) {
 	try {
 		return fmt::format("{:%Y-%m-%d %X}", fmt::localtime(time));
 	} catch (const std::out_of_range &exception) {
-		SPDLOG_ERROR("Failed to format date short with error code {}", exception.what());
+		g_logger().error("Failed to format date short with error code {}", exception.what());
 	}
 	return {};
+}
+
+std::string formatTime(time_t time) {
+	try {
+		return fmt::format("{:%H:%M:%S}", fmt::localtime(time));
+	} catch (const std::out_of_range &exception) {
+		g_logger().error("Failed to format time with error code {}", exception.what());
+	}
+	return {};
+}
+
+std::string formatEnumName(std::string_view name) {
+	std::string result { name.begin(), name.end() };
+	std::replace(result.begin(), result.end(), '_', ' ');
+	std::transform(result.begin(), result.end(), result.begin(), [](unsigned char c) { return std::tolower(c); });
+	return result;
 }
 
 std::time_t getTimeNow() {
@@ -371,6 +458,15 @@ std::time_t getTimeNow() {
 std::time_t getTimeMsNow() {
 	auto duration = std::chrono::system_clock::now().time_since_epoch();
 	return std::chrono::duration_cast<std::chrono::milliseconds>(duration).count();
+}
+
+BedItemPart_t getBedPart(const std::string_view string) {
+	if (string == "pillow" || string == "1") {
+		return BED_PILLOW_PART;
+	} else if (string == "blanket" || string == "2") {
+		return BED_BLANKET_PART;
+	}
+	return BED_NONE_PART;
 }
 
 Direction getDirection(const std::string &string) {
@@ -442,41 +538,40 @@ Position getNextPosition(Direction direction, Position pos) {
 	return pos;
 }
 
-Direction getDirectionTo(const Position &from, const Position &to) {
-	Direction dir;
+Direction getDirectionTo(const Position &from, const Position &to, bool exactDiagonalOnly /* =true*/) {
+	int_fast32_t dx = Position::getOffsetX(from, to);
+	int_fast32_t dy = Position::getOffsetY(from, to);
 
-	int32_t x_offset = Position::getOffsetX(from, to);
-	if (x_offset < 0) {
-		dir = DIRECTION_EAST;
-		x_offset = std::abs(x_offset);
-	} else {
-		dir = DIRECTION_WEST;
+	if (exactDiagonalOnly) {
+		int_fast32_t absDx = std::abs(dx);
+		int_fast32_t absDy = std::abs(dy);
+
+		/*
+		 * Only consider diagonal if dx and dy are equal (exact diagonal).
+		 */
+		if (absDx > absDy)
+			return dx < 0 ? DIRECTION_EAST : DIRECTION_WEST;
+		if (absDx < absDy)
+			return dy > 0 ? DIRECTION_NORTH : DIRECTION_SOUTH;
 	}
 
-	int32_t y_offset = Position::getOffsetY(from, to);
-	if (y_offset >= 0) {
-		if (y_offset > x_offset) {
-			dir = DIRECTION_NORTH;
-		} else if (y_offset == x_offset) {
-			if (dir == DIRECTION_EAST) {
-				dir = DIRECTION_NORTHEAST;
-			} else {
-				dir = DIRECTION_NORTHWEST;
-			}
-		}
-	} else {
-		y_offset = std::abs(y_offset);
-		if (y_offset > x_offset) {
-			dir = DIRECTION_SOUTH;
-		} else if (y_offset == x_offset) {
-			if (dir == DIRECTION_EAST) {
-				dir = DIRECTION_SOUTHEAST;
-			} else {
-				dir = DIRECTION_SOUTHWEST;
-			}
-		}
+	if (dx < 0) {
+		if (dy < 0)
+			return DIRECTION_SOUTHEAST;
+		if (dy > 0)
+			return DIRECTION_NORTHEAST;
+		return DIRECTION_EAST;
 	}
-	return dir;
+
+	if (dx > 0) {
+		if (dy < 0)
+			return DIRECTION_SOUTHWEST;
+		if (dy > 0)
+			return DIRECTION_NORTHWEST;
+		return DIRECTION_WEST;
+	}
+
+	return dy > 0 ? DIRECTION_NORTH : DIRECTION_SOUTH;
 }
 
 using MagicEffectNames = phmap::flat_hash_map<std::string, MagicEffectClasses>;
@@ -680,6 +775,8 @@ CombatTypeNames combatTypeNames = {
 	{ COMBAT_LIFEDRAIN, "lifedrain" },
 	{ COMBAT_MANADRAIN, "manadrain" },
 	{ COMBAT_PHYSICALDAMAGE, "physical" },
+	{ COMBAT_AGONYDAMAGE, "agony" },
+	{ COMBAT_NEUTRALDAMAGE, "neutral" },
 };
 
 AmmoTypeNames ammoTypeNames = {
@@ -774,22 +871,6 @@ ShootType_t getShootType(const std::string &strValue) {
 		return shootType->second;
 	}
 	return CONST_ANI_NONE;
-}
-
-std::string getCombatName(CombatType_t combatType) {
-	auto combatName = combatTypeNames.find(combatType);
-	if (combatName != combatTypeNames.end()) {
-		return combatName->second;
-	}
-	return "unknown";
-}
-
-CombatType_t getCombatType(const std::string &combatname) {
-	auto it = std::find_if(combatTypeNames.begin(), combatTypeNames.end(), [combatname](const std::pair<CombatType_t, std::string> &pair) {
-		return pair.second == combatname;
-	});
-
-	return it != combatTypeNames.end() ? it->first : COMBAT_NONE;
 }
 
 Ammo_t getAmmoType(const std::string &strValue) {
@@ -951,15 +1032,17 @@ bool booleanString(const std::string &str) {
 std::string getWeaponName(WeaponType_t weaponType) {
 	switch (weaponType) {
 		case WEAPON_SWORD:
-			return "stabbing weapon";
+			return "sword";
 		case WEAPON_CLUB:
-			return "blunt instrument";
+			return "club";
 		case WEAPON_AXE:
-			return "cutting weapon";
+			return "axe";
 		case WEAPON_DISTANCE:
-			return "firearm";
+			return "distance";
 		case WEAPON_WAND:
-			return "wand/rod";
+			return "wand";
+		case WEAPON_AMMO:
+			return "ammunition";
 		case WEAPON_MISSILE:
 			return "missile";
 		default:
@@ -967,39 +1050,50 @@ std::string getWeaponName(WeaponType_t weaponType) {
 	}
 }
 
-size_t combatTypeToIndex(CombatType_t combatType) {
-	switch (combatType) {
-		case COMBAT_PHYSICALDAMAGE:
-			return 0;
-		case COMBAT_ENERGYDAMAGE:
-			return 1;
-		case COMBAT_EARTHDAMAGE:
-			return 2;
-		case COMBAT_FIREDAMAGE:
-			return 3;
-		case COMBAT_UNDEFINEDDAMAGE:
-			return 4;
-		case COMBAT_LIFEDRAIN:
-			return 5;
-		case COMBAT_MANADRAIN:
-			return 6;
-		case COMBAT_HEALING:
-			return 7;
-		case COMBAT_DROWNDAMAGE:
-			return 8;
-		case COMBAT_ICEDAMAGE:
-			return 9;
-		case COMBAT_HOLYDAMAGE:
-			return 10;
-		case COMBAT_DEATHDAMAGE:
-			return 11;
-		default:
-			return 0;
+std::string getCombatName(CombatType_t combatType) {
+	auto combatName = combatTypeNames.find(combatType);
+	if (combatName != combatTypeNames.end()) {
+		return combatName->second;
 	}
+	return "unknown";
+}
+
+CombatType_t getCombatTypeByName(const std::string &combatname) {
+	auto it = std::find_if(combatTypeNames.begin(), combatTypeNames.end(), [combatname](const std::pair<CombatType_t, std::string> &pair) {
+		return pair.second == combatname;
+	});
+
+	return it != combatTypeNames.end() ? it->first : COMBAT_NONE;
+}
+
+size_t combatTypeToIndex(CombatType_t combatType) {
+	auto enum_index_opt = magic_enum::enum_index(combatType);
+	if (enum_index_opt.has_value() && enum_index_opt.value() < COMBAT_COUNT) {
+		return enum_index_opt.value();
+	} else {
+		g_logger().error("[{}] Combat type {} is out of range", __FUNCTION__, fmt::underlying(combatType));
+		// Uncomment for catch the function call with debug
+		// throw std::out_of_range("Combat is out of range");
+	}
+
+	return COMBAT_NONE;
+}
+
+std::string combatTypeToName(CombatType_t combatType) {
+	std::string_view name = magic_enum::enum_name(combatType);
+	if (!name.empty() && combatType < COMBAT_COUNT) {
+		return formatEnumName(name);
+	} else {
+		g_logger().error("[{}] Combat type {} is out of range", __FUNCTION__, fmt::underlying(combatType));
+		// Uncomment for catch the function call with debug
+		// throw std::out_of_range("Index is out of range");
+	}
+
+	return {};
 }
 
 CombatType_t indexToCombatType(size_t v) {
-	return static_cast<CombatType_t>(1 << v);
+	return static_cast<CombatType_t>(v);
 }
 
 ItemAttribute_t stringToItemAttribute(const std::string &str) {
@@ -1057,9 +1151,11 @@ ItemAttribute_t stringToItemAttribute(const std::string &str) {
 		return ItemAttribute_t::AMOUNT;
 	} else if (str == "tier") {
 		return ItemAttribute_t::TIER;
+	} else if (str == "lootmessagesuffix") {
+		return ItemAttribute_t::LOOTMESSAGE_SUFFIX;
 	}
 
-	SPDLOG_ERROR("[{}] attribute type {} is not registered", __FUNCTION__, str);
+	g_logger().error("[{}] attribute type {} is not registered", __FUNCTION__, str);
 	return ItemAttribute_t::NONE;
 }
 
@@ -1164,7 +1260,7 @@ const char* getReturnMessage(ReturnValue value) {
 			return "You do not have the required magic level to use this rune.";
 
 		case RETURNVALUE_YOUAREALREADYTRADING:
-			return "You are already trading.";
+			return "You are already trading. Finish this trade first.";
 
 		case RETURNVALUE_THISPLAYERISALREADYTRADING:
 			return "This player is already trading.";
@@ -1377,11 +1473,22 @@ void capitalizeWords(std::string &source) {
  * Then can press any key to close
  */
 void consoleHandlerExit() {
-	SPDLOG_ERROR("The program will close after pressing the enter key...");
+	g_logger().error("The program will close after pressing the enter key...");
 	if (isatty(STDIN_FILENO)) {
 		getchar();
 	}
 	return;
+}
+
+std::string validateNameHouse(const std::string &list) {
+	std::string result;
+	for (char c : list) {
+		if (isalpha(c) || c == ' ' || c == '\'' || c == '!' || c == '\n'
+			|| c == '?' || c == '#' || c == '@' || c == '*') {
+			result += c;
+		}
+	}
+	return result;
 }
 
 NameEval_t validateName(const std::string &name) {
@@ -1516,4 +1623,45 @@ std::string formatPrice(std::string price, bool space /* = false*/) {
 	}
 
 	return price;
+}
+
+std::vector<std::string> split(const std::string &str) {
+	std::vector<std::string> tokens;
+	std::string token;
+	std::istringstream tokenStream(str);
+	while (std::getline(tokenStream, token, ',')) {
+		auto trimedToken = token;
+		trimString(trimedToken);
+		tokens.push_back(trimedToken);
+	}
+	return tokens;
+}
+
+std::string getFormattedTimeRemaining(uint32_t time) {
+	time_t timeRemaining = time - getTimeNow();
+
+	int days = static_cast<int>(std::floor(timeRemaining / 86400));
+
+	std::stringstream output;
+	if (days > 1) {
+		output << days << " days";
+		return output.str();
+	}
+
+	int hours = static_cast<int>(std::floor((timeRemaining % 86400) / 3600));
+	int minutes = static_cast<int>(std::floor((timeRemaining % 3600) / 60));
+	int seconds = static_cast<int>(timeRemaining % 60);
+
+	if (hours == 0 && minutes == 0 && seconds > 0) {
+		output << " less than 1 minute";
+	} else {
+		if (hours > 0) {
+			output << hours << " hour" << (hours != 1 ? "s" : "");
+		}
+		if (minutes > 0) {
+			output << (hours > 0 ? " and " : "") << minutes << " minute" << (minutes != 1 ? "s" : "");
+		}
+	}
+
+	return output.str();
 }

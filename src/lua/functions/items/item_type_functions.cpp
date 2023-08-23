@@ -9,8 +9,8 @@
 
 #include "pch.hpp"
 
-#include "items/item.h"
-#include "items/items.h"
+#include "items/item.hpp"
+#include "items/items.hpp"
 #include "lua/functions/items/item_type_functions.hpp"
 
 int ItemTypeFunctions::luaItemTypeCreate(lua_State* L) {
@@ -582,6 +582,17 @@ int ItemTypeFunctions::luaItemTypeHasSubType(lua_State* L) {
 	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
 	if (itemType) {
 		pushBoolean(L, itemType->hasSubType());
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int ItemTypeFunctions::luaItemTypeGetVocationString(lua_State* L) {
+	// itemType:getVocationString()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		pushString(L, itemType->vocationString);
 	} else {
 		lua_pushnil(L);
 	}

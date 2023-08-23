@@ -9,10 +9,10 @@
 
 #include "pch.hpp"
 
-#include "game/game.h"
-#include "creatures/creature.h"
-#include "creatures/monsters/monster.h"
-#include "creatures/monsters/monsters.h"
+#include "game/game.hpp"
+#include "creatures/creature.hpp"
+#include "creatures/monsters/monster.hpp"
+#include "creatures/monsters/monsters.hpp"
 #include "lua/functions/creatures/monster/monster_functions.hpp"
 
 int MonsterFunctions::luaMonsterCreate(lua_State* L) {
@@ -21,7 +21,7 @@ int MonsterFunctions::luaMonsterCreate(lua_State* L) {
 	if (isNumber(L, 2)) {
 		monster = g_game().getMonsterByID(getNumber<uint32_t>(L, 2));
 	} else if (isUserdata(L, 2)) {
-		if (getUserdataType(L, 2) != LuaData_Monster) {
+		if (getUserdataType(L, 2) != LuaData_t::Monster) {
 			lua_pushnil(L);
 			return 1;
 		}
@@ -61,35 +61,34 @@ int MonsterFunctions::luaMonsterSetType(lua_State* L) {
 	// monster:setType(name or raceid)
 	Monster* monster = getUserdata<Monster>(L, 1);
 	if (monster) {
-		MonsterType* monsterType = nullptr;
+		std::shared_ptr<MonsterType> mType = nullptr;
 		if (isNumber(L, 2)) {
-			monsterType = g_monsters().getMonsterTypeByRaceId(getNumber<uint16_t>(L, 2));
+			mType = g_monsters().getMonsterTypeByRaceId(getNumber<uint16_t>(L, 2));
 		} else {
-			monsterType = g_monsters().getMonsterType(getString(L, 2));
+			mType = g_monsters().getMonsterType(getString(L, 2));
 		}
 		// Unregister creature events (current MonsterType)
 		for (const std::string &scriptName : monster->mType->info.scripts) {
 			if (!monster->unregisterCreatureEvent(scriptName)) {
-				SPDLOG_WARN("[Warning - MonsterFunctions::luaMonsterSetType] Unknown event name: {}", scriptName);
+				g_logger().warn("[Warning - MonsterFunctions::luaMonsterSetType] Unknown event name: {}", scriptName);
 			}
 		}
 		// Assign new MonsterType
-		monster->mType = monsterType;
-		monster->strDescription = asLowerCaseString(monsterType->nameDescription);
-		monster->defaultOutfit = monsterType->info.outfit;
-		monster->currentOutfit = monsterType->info.outfit;
-		monster->skull = monsterType->info.skull;
-		float multiplier = g_configManager().getFloat(RATE_MONSTER_HEALTH);
-		monster->health = monsterType->info.health * multiplier;
-		monster->healthMax = monsterType->info.healthMax * multiplier;
-		monster->baseSpeed = monsterType->getBaseSpeed();
-		monster->internalLight = monsterType->info.light;
-		monster->hiddenHealth = monsterType->info.hiddenHealth;
-		monster->targetDistance = monsterType->info.targetDistance;
+		monster->mType = mType;
+		monster->strDescription = asLowerCaseString(mType->nameDescription);
+		monster->defaultOutfit = mType->info.outfit;
+		monster->currentOutfit = mType->info.outfit;
+		monster->skull = mType->info.skull;
+		monster->health = mType->info.health * mType->getHealthMultiplier();
+		monster->healthMax = mType->info.healthMax * mType->getHealthMultiplier();
+		monster->baseSpeed = mType->getBaseSpeed();
+		monster->internalLight = mType->info.light;
+		monster->hiddenHealth = mType->info.hiddenHealth;
+		monster->targetDistance = mType->info.targetDistance;
 		// Register creature events (new MonsterType)
-		for (const std::string &scriptName : monsterType->info.scripts) {
+		for (const std::string &scriptName : mType->info.scripts) {
 			if (!monster->registerCreatureEvent(scriptName)) {
-				SPDLOG_WARN("[Warning - MonsterFunctions::luaMonsterSetType] Unknown event name: {}", scriptName);
+				g_logger().warn("[Warning - MonsterFunctions::luaMonsterSetType] Unknown event name: {}", scriptName);
 			}
 		}
 		// Reload creature on spectators
@@ -306,11 +305,12 @@ int MonsterFunctions::luaMonsterGetTargetCount(lua_State* L) {
 }
 
 int MonsterFunctions::luaMonsterChangeTargetDistance(lua_State* L) {
-	// monster:changeTargetDistance(distance)
+	// monster:changeTargetDistance(distance[, duration = 12000])
 	Monster* monster = getUserdata<Monster>(L, 1);
 	if (monster) {
 		int32_t distance = getNumber<int32_t>(L, 2, 1);
-		pushBoolean(L, monster->changeTargetDistance(distance));
+		uint32_t duration = getNumber<uint32_t>(L, 3, 12000);
+		pushBoolean(L, monster->changeTargetDistance(distance, duration));
 	} else {
 		lua_pushnil(L);
 	}
@@ -511,5 +511,73 @@ int MonsterFunctions::luaMonsterGetName(lua_State* L) {
 	}
 
 	pushString(L, monster->getName());
+	return 1;
+}
+
+int MonsterFunctions::luaMonsterHazard(lua_State* L) {
+	// get: monster:hazard() ; set: monster:hazard(hazard)
+	Monster* monster = getUserdata<Monster>(L, 1);
+	bool hazard = getBoolean(L, 2, false);
+	if (monster) {
+		if (lua_gettop(L) == 1) {
+			pushBoolean(L, monster->getHazard());
+		} else {
+			monster->setHazard(hazard);
+			pushBoolean(L, monster->getHazard());
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int MonsterFunctions::luaMonsterHazardCrit(lua_State* L) {
+	// get: monster:hazardCrit() ; set: monster:hazardCrit(hazardCrit)
+	Monster* monster = getUserdata<Monster>(L, 1);
+	bool hazardCrit = getBoolean(L, 2, false);
+	if (monster) {
+		if (lua_gettop(L) == 1) {
+			pushBoolean(L, monster->getHazardSystemCrit());
+		} else {
+			monster->setHazardSystemCrit(hazardCrit);
+			pushBoolean(L, monster->getHazardSystemCrit());
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int MonsterFunctions::luaMonsterHazardDodge(lua_State* L) {
+	// get: monster:hazardDodge() ; set: monster:hazardDodge(hazardDodge)
+	Monster* monster = getUserdata<Monster>(L, 1);
+	bool hazardDodge = getBoolean(L, 2, false);
+	if (monster) {
+		if (lua_gettop(L) == 1) {
+			pushBoolean(L, monster->getHazardSystemDodge());
+		} else {
+			monster->setHazardSystemDodge(hazardDodge);
+			pushBoolean(L, monster->getHazardSystemDodge());
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int MonsterFunctions::luaMonsterHazardDamageBoost(lua_State* L) {
+	// get: monster:hazardDamageBoost() ; set: monster:hazardDamageBoost(hazardDamageBoost)
+	Monster* monster = getUserdata<Monster>(L, 1);
+	bool hazardDamageBoost = getBoolean(L, 2, false);
+	if (monster) {
+		if (lua_gettop(L) == 1) {
+			pushBoolean(L, monster->getHazardSystemDamageBoost());
+		} else {
+			monster->setHazardSystemDamageBoost(hazardDamageBoost);
+			pushBoolean(L, monster->getHazardSystemCrit());
+		}
+	} else {
+		lua_pushnil(L);
+	}
 	return 1;
 }

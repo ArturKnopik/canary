@@ -9,8 +9,8 @@
 
 #include "pch.hpp"
 
-#include "game/game.h"
-#include "creatures/creature.h"
+#include "game/game.hpp"
+#include "creatures/creature.hpp"
 #include "lua/functions/creatures/creature_functions.hpp"
 
 int CreatureFunctions::luaCreatureCreate(lua_State* L) {
@@ -21,8 +21,8 @@ int CreatureFunctions::luaCreatureCreate(lua_State* L) {
 	} else if (isString(L, 2)) {
 		creature = g_game().getCreatureByName(getString(L, 2));
 	} else if (isUserdata(L, 2)) {
-		LuaDataType type = getUserdataType(L, 2);
-		if (type != LuaData_Player && type != LuaData_Monster && type != LuaData_Npc) {
+		LuaData_t type = getUserdataType(L, 2);
+		if (type != LuaData_t::Player && type != LuaData_t::Monster && type != LuaData_t::Npc) {
 			lua_pushnil(L);
 			return 1;
 		}
@@ -50,10 +50,10 @@ int CreatureFunctions::luaCreatureGetEvents(lua_State* L) {
 
 	CreatureEventType_t eventType = getNumber<CreatureEventType_t>(L, 2);
 	const auto &eventList = creature->getCreatureEvents(eventType);
-	lua_createtable(L, eventList.size(), 0);
+	lua_createtable(L, static_cast<int>(eventList.size()), 0);
 
 	int index = 0;
-	for (CreatureEvent* event : eventList) {
+	for (const auto &event : eventList) {
 		pushString(L, event->getName());
 		lua_rawseti(L, -2, ++index);
 	}
@@ -346,6 +346,21 @@ int CreatureFunctions::luaCreatureGetSpeed(lua_State* L) {
 	return 1;
 }
 
+int CreatureFunctions::luaCreatureSetSpeed(lua_State* L) {
+	// creature:setSpeed(speed)
+	Creature* creature = getCreature(L, 1);
+	if (!creature) {
+		reportErrorFunc(getErrorDesc(LUA_ERROR_CREATURE_NOT_FOUND));
+		pushBoolean(L, false);
+		return 1;
+	}
+
+	int32_t speed = getNumber<int32_t>(L, 2);
+	g_game().setCreatureSpeed(creature, speed);
+	pushBoolean(L, true);
+	return 1;
+}
+
 int CreatureFunctions::luaCreatureGetBaseSpeed(lua_State* L) {
 	// creature:getBaseSpeed()
 	const Creature* creature = getUserdata<const Creature>(L, 1);
@@ -605,7 +620,7 @@ int CreatureFunctions::luaCreatureSetOutfit(lua_State* L) {
 	if (creature) {
 		Outfit_t outfit = getOutfit(L, 2);
 		if (g_configManager().getBoolean(WARN_UNSAFE_SCRIPTS) && outfit.lookType != 0 && !g_game().isLookTypeRegistered(outfit.lookType)) {
-			SPDLOG_WARN("[CreatureFunctions::luaCreatureSetOutfit] An unregistered creature looktype type with id '{}' was blocked to prevent client crash.", outfit.lookType);
+			g_logger().warn("[CreatureFunctions::luaCreatureSetOutfit] An unregistered creature looktype type with id '{}' was blocked to prevent client crash.", outfit.lookType);
 			return 1;
 		}
 
@@ -751,7 +766,7 @@ int CreatureFunctions::luaCreatureTeleportTo(lua_State* L) {
 	const Position oldPosition = creature->getPosition();
 	if (auto ret = g_game().internalTeleport(creature, position, pushMovement);
 		ret != RETURNVALUE_NOERROR) {
-		SPDLOG_ERROR("[{}] Failed to teleport creature {}, on position {}, error code: {}", __FUNCTION__, creature->getName(), oldPosition.toString(), getReturnMessage(ret));
+		g_logger().error("[{}] Failed to teleport creature {}, on position {}, error code: {}", __FUNCTION__, creature->getName(), oldPosition.toString(), getReturnMessage(ret));
 		pushBoolean(L, false);
 		return 1;
 	}
@@ -935,13 +950,33 @@ int CreatureFunctions::luaCreatureMove(lua_State* L) {
 	return 1;
 }
 
-int CreatureFunctions::luaCreatureGetZone(lua_State* L) {
-	// creature:getZone()
+int CreatureFunctions::luaCreatureGetZoneType(lua_State* L) {
+	// creature:getZoneType()
 	Creature* creature = getUserdata<Creature>(L, 1);
 	if (creature) {
-		lua_pushnumber(L, creature->getZone());
+		lua_pushnumber(L, creature->getZoneType());
 	} else {
 		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int CreatureFunctions::luaCreatureGetZones(lua_State* L) {
+	// creature:getZones()
+	Creature* creature = getUserdata<Creature>(L, 1);
+	if (creature == nullptr) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	const auto &zones = creature->getZones();
+	lua_createtable(L, static_cast<int>(zones.size()), 0);
+	int index = 0;
+	for (auto zone : zones) {
+		index++;
+		pushUserdata<Zone>(L, zone);
+		setMetatable(L, -1, "Zone");
+		lua_rawseti(L, -2, index);
 	}
 	return 1;
 }

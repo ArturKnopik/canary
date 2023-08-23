@@ -10,7 +10,7 @@
 #include "pch.hpp"
 
 #include "lua/functions/core/game/config_functions.hpp"
-#include "config/configmanager.h"
+#include "config/configmanager.hpp"
 
 void ConfigFunctions::init(lua_State* L) {
 	registerTable(L, "configManager");
@@ -20,10 +20,10 @@ void ConfigFunctions::init(lua_State* L) {
 	registerMethod(L, "configManager", "getFloat", ConfigFunctions::luaConfigManagerGetFloat);
 
 #define registerEnumIn(L, tableName, value)                                                     \
-	{                                                                                           \
+	do {                                                                                        \
 		std::string enumName = #value;                                                          \
 		registerVariable(L, tableName, enumName.substr(enumName.find_last_of(':') + 1), value); \
-	}
+	} while (0)
 	registerTable(L, "configKeys");
 	registerEnumIn(L, "configKeys", ALLOW_CHANGEOUTFIT);
 	registerEnumIn(L, "configKeys", ONE_PLAYER_ON_ACCOUNT);
@@ -131,6 +131,11 @@ void ConfigFunctions::init(lua_State* L) {
 	registerEnumIn(L, "configKeys", RATE_MONSTER_HEALTH);
 	registerEnumIn(L, "configKeys", RATE_MONSTER_ATTACK);
 	registerEnumIn(L, "configKeys", RATE_MONSTER_DEFENSE);
+	registerEnumIn(L, "configKeys", RATE_BOSS_HEALTH);
+	registerEnumIn(L, "configKeys", RATE_BOSS_ATTACK);
+	registerEnumIn(L, "configKeys", RATE_BOSS_DEFENSE);
+	registerEnumIn(L, "configKeys", BOSS_DEFAULT_TIME_TO_FIGHT_AGAIN);
+	registerEnumIn(L, "configKeys", BOSS_DEFAULT_TIME_TO_DEFEAT);
 	registerEnumIn(L, "configKeys", RATE_NPC_HEALTH);
 	registerEnumIn(L, "configKeys", RATE_NPC_ATTACK);
 	registerEnumIn(L, "configKeys", RATE_NPC_DEFENSE);
@@ -192,6 +197,57 @@ void ConfigFunctions::init(lua_State* L) {
 	registerEnumIn(L, "configKeys", TOGGLE_GOLD_POUCH_ALLOW_ANYTHING);
 	registerEnumIn(L, "configKeys", TOGGLE_SERVER_IS_RETRO);
 	registerEnumIn(L, "configKeys", TOGGLE_TRAVELS_FREE);
+	registerEnumIn(L, "configKeys", BUY_AOL_COMMAND_FEE);
+	registerEnumIn(L, "configKeys", BUY_BLESS_COMMAND_FEE);
+	registerEnumIn(L, "configKeys", TELEPORT_PLAYER_TO_VOCATION_ROOM);
+
+	registerEnumIn(L, "configKeys", HAZARD_SPAWN_PLUNDER_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_CRITICAL_INTERVAL);
+	registerEnumIn(L, "configKeys", HAZARD_CRITICAL_CHANCE);
+	registerEnumIn(L, "configKeys", HAZARD_CRITICAL_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_DAMAGE_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_DODGE_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_PODS_DROP_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_PODS_TIME_TO_DAMAGE);
+	registerEnumIn(L, "configKeys", HAZARD_PODS_TIME_TO_SPAWN);
+	registerEnumIn(L, "configKeys", HAZARD_EXP_BONUS_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_LOOT_BONUS_MULTIPLIER);
+	registerEnumIn(L, "configKeys", HAZARD_PODS_DAMAGE);
+	registerEnumIn(L, "configKeys", TOGGLE_HAZARDSYSTEM);
+	registerEnumIn(L, "configKeys", LOW_LEVEL_BONUS_EXP);
+
+	registerEnumIn(L, "configKeys", LOYALTY_ENABLED);
+	registerEnumIn(L, "configKeys", LOYALTY_POINTS_PER_CREATION_DAY);
+	registerEnumIn(L, "configKeys", LOYALTY_POINTS_PER_PREMIUM_DAY_SPENT);
+	registerEnumIn(L, "configKeys", LOYALTY_POINTS_PER_PREMIUM_DAY_PURCHASED);
+	registerEnumIn(L, "configKeys", LOYALTY_BONUS_PERCENTAGE_MULTIPLIER);
+
+	registerEnumIn(L, "configKeys", PARTY_SHARE_LOOT_BOOSTS);
+	registerEnumIn(L, "configKeys", PARTY_SHARE_LOOT_BOOSTS_DIMINISHING_FACTOR);
+	registerEnumIn(L, "configKeys", TIBIADROME_CONCOCTION_COOLDOWN);
+	registerEnumIn(L, "configKeys", TIBIADROME_CONCOCTION_DURATION);
+	registerEnumIn(L, "configKeys", TIBIADROME_CONCOCTION_TICK_TYPE);
+
+	registerEnumIn(L, "configKeys", AUTH_TYPE);
+	registerEnumIn(L, "configKeys", RESET_SESSIONS_ON_STARTUP);
+
+	registerEnumIn(L, "configKeys", TOGGLE_ATTACK_SPEED_ONFIST);
+	registerEnumIn(L, "configKeys", MULTIPLIER_ATTACKONFIST);
+	registerEnumIn(L, "configKeys", MAX_SPEED_ATTACKONFIST);
+
+	registerEnumIn(L, "configKeys", M_CONST);
+	registerEnumIn(L, "configKeys", T_CONST);
+	registerEnumIn(L, "configKeys", PARALLELISM);
+
+	registerEnumIn(L, "configKeys", AUTOLOOT);
+
+	registerEnumIn(L, "configKeys", VIP_SYSTEM_ENABLED);
+	registerEnumIn(L, "configKeys", VIP_BONUS_EXP);
+	registerEnumIn(L, "configKeys", VIP_BONUS_LOOT);
+	registerEnumIn(L, "configKeys", VIP_BONUS_SKILL);
+	registerEnumIn(L, "configKeys", VIP_AUTOLOOT_VIP_ONLY);
+	registerEnumIn(L, "configKeys", VIP_STAY_ONLINE);
+	registerEnumIn(L, "configKeys", VIP_FAMILIAR_TIME_COOLDOWN_REDUCTION);
 #undef registerEnumIn
 }
 

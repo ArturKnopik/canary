@@ -9,10 +9,10 @@
 
 #include "pch.hpp"
 
-#include "creatures/players/vocations/vocation.h"
+#include "creatures/players/vocations/vocation.hpp"
 
-#include "utils/pugicast.h"
-#include "utils/tools.h"
+#include "utils/pugicast.hpp"
+#include "utils/tools.hpp"
 
 bool Vocations::loadFromXml() {
 	pugi::xml_document doc;
@@ -26,7 +26,7 @@ bool Vocations::loadFromXml() {
 	for (auto vocationNode : doc.child("vocations").children()) {
 		pugi::xml_attribute attr;
 		if (!(attr = vocationNode.attribute("id"))) {
-			SPDLOG_WARN("[{}] - Missing vocation id", __FUNCTION__);
+			g_logger().warn("[{}] - Missing vocation id", __FUNCTION__);
 			continue;
 		}
 
@@ -119,14 +119,29 @@ bool Vocations::loadFromXml() {
 					if (skill_id <= SKILL_LAST) {
 						voc.skillMultipliers[skill_id] = pugi::cast<float>(childNode.attribute("multiplier").value());
 					} else {
-						SPDLOG_WARN("[Vocations::loadFromXml] - "
-									"No valid skill id: {} for vocation: {}",
-									skill_id, voc.id);
+						g_logger().warn("[Vocations::loadFromXml] - "
+										"No valid skill id: {} for vocation: {}",
+										skill_id, voc.id);
 					}
 				} else {
-					SPDLOG_WARN("[Vocations::loadFromXml] - "
-								"Missing skill id for vocation: {}",
-								voc.id);
+					g_logger().warn("[Vocations::loadFromXml] - "
+									"Missing skill id for vocation: {}",
+									voc.id);
+				}
+			} else if (strcasecmp(childNode.name(), "mitigation") == 0) {
+				pugi::xml_attribute factorAttribute = childNode.attribute("multiplier");
+				if (factorAttribute) {
+					voc.mitigationFactor = pugi::cast<float>(factorAttribute.value());
+				}
+
+				pugi::xml_attribute primaryShieldAttribute = childNode.attribute("primaryShield");
+				if (primaryShieldAttribute) {
+					voc.mitigationPrimaryShield = pugi::cast<float>(primaryShieldAttribute.value());
+				}
+
+				pugi::xml_attribute secondaryShieldAttribute = childNode.attribute("secondaryShield");
+				if (secondaryShieldAttribute) {
+					voc.mitigationSecondaryShield = pugi::cast<float>(secondaryShieldAttribute.value());
 				}
 			} else if (strcasecmp(childNode.name(), "formula") == 0) {
 				pugi::xml_attribute meleeDamageAttribute = childNode.attribute("meleeDamage");
@@ -157,9 +172,9 @@ bool Vocations::loadFromXml() {
 Vocation* Vocations::getVocation(uint16_t id) {
 	auto it = vocationsMap.find(id);
 	if (it == vocationsMap.end()) {
-		SPDLOG_WARN("[Vocations::getVocation] - "
-					"Vocation {} not found",
-					id);
+		g_logger().warn("[Vocations::getVocation] - "
+						"Vocation {} not found",
+						id);
 		return nullptr;
 	}
 	return &it->second;
@@ -184,9 +199,28 @@ uint16_t Vocations::getPromotedVocation(uint16_t vocationId) const {
 }
 
 uint32_t Vocation::skillBase[SKILL_LAST + 1] = { 50, 50, 50, 50, 30, 100, 20 };
+const uint16_t minSkillLevel = 10;
+
+absl::uint128 Vocation::getTotalSkillTries(uint8_t skill, uint16_t level) {
+	if (skill > SKILL_LAST) {
+		return 0;
+	}
+
+	auto it = cacheSkillTotal[skill].find(level);
+	if (it != cacheSkillTotal[skill].end()) {
+		return it->second;
+	}
+
+	absl::uint128 totalTries = 0;
+	for (uint16_t i = minSkillLevel; i <= level; ++i) {
+		totalTries += getReqSkillTries(skill, i);
+	}
+	cacheSkillTotal[skill][level] = totalTries;
+	return totalTries;
+}
 
 uint64_t Vocation::getReqSkillTries(uint8_t skill, uint16_t level) {
-	if (skill > SKILL_LAST || level <= 10) {
+	if (skill > SKILL_LAST || level <= minSkillLevel) {
 		return 0;
 	}
 
@@ -195,9 +229,24 @@ uint64_t Vocation::getReqSkillTries(uint8_t skill, uint16_t level) {
 		return it->second;
 	}
 
-	uint64_t tries = static_cast<uint64_t>(skillBase[skill] * std::pow(static_cast<double>(skillMultipliers[skill]), level - 11));
+	uint64_t tries = static_cast<uint64_t>(skillBase[skill] * std::pow(static_cast<double>(skillMultipliers[skill]), level - (minSkillLevel + 1)));
 	cacheSkill[skill][level] = tries;
 	return tries;
+}
+
+absl::uint128 Vocation::getTotalMana(uint32_t magLevel) {
+	if (magLevel == 0) {
+		return 0;
+	}
+	auto it = cacheManaTotal.find(magLevel);
+	if (it != cacheManaTotal.end()) {
+		return it->second;
+	}
+	absl::uint128 totalMana = 0;
+	for (uint32_t i = 1; i <= magLevel; ++i) {
+		totalMana += getReqMana(i);
+	}
+	return totalMana;
 }
 
 uint64_t Vocation::getReqMana(uint32_t magLevel) {

@@ -1,17 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|Win32">
-      <Configuration>Debug</Configuration>
-      <Platform>Win32</Platform>
-    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
-    </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|Win32">
-      <Configuration>Release</Configuration>
-      <Platform>Win32</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|x64">
       <Configuration>Release</Configuration>
@@ -19,100 +11,120 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\src\config\configmanager.h" />
+    <ClInclude Include="..\src\config\configmanager.hpp" />
     <ClInclude Include="..\src\config\config_definitions.hpp" />
     <ClInclude Include="..\src\core.hpp" />
-    <ClInclude Include="..\src\creatures\appearance\mounts\mounts.h" />
-    <ClInclude Include="..\src\creatures\appearance\outfit\outfit.h" />
-    <ClInclude Include="..\src\creatures\combat\combat.h" />
-    <ClInclude Include="..\src\creatures\combat\condition.h" />
-    <ClInclude Include="..\src\creatures\combat\spells.h" />
-    <ClInclude Include="..\src\creatures\creature.h" />
+    <ClInclude Include="..\src\creatures\appearance\mounts\mounts.hpp" />
+    <ClInclude Include="..\src\creatures\appearance\outfit\outfit.hpp" />
+    <ClInclude Include="..\src\creatures\combat\combat.hpp" />
+    <ClInclude Include="..\src\creatures\combat\condition.hpp" />
+    <ClInclude Include="..\src\creatures\combat\spells.hpp" />
+    <ClInclude Include="..\src\creatures\creature.hpp" />
     <ClInclude Include="..\src\creatures\creatures_definitions.hpp" />
-    <ClInclude Include="..\src\creatures\interactions\chat.h" />
-    <ClInclude Include="..\src\creatures\monsters\monster.h" />
-    <ClInclude Include="..\src\creatures\monsters\monsters.h" />
-    <ClInclude Include="..\src\creatures\monsters\spawns\spawn_monster.h" />
-    <ClInclude Include="..\src\creatures\npcs\npc.h" />
-    <ClInclude Include="..\src\creatures\npcs\npcs.h" />
-    <ClInclude Include="..\src\creatures\npcs\spawns\spawn_npc.h" />
+    <ClInclude Include="..\src\creatures\interactions\chat.hpp" />
+    <ClInclude Include="..\src\creatures\monsters\monster.hpp" />
+    <ClInclude Include="..\src\creatures\monsters\monsters.hpp" />
+    <ClInclude Include="..\src\creatures\monsters\spawns\spawn_monster.hpp" />
+    <ClInclude Include="..\src\creatures\npcs\npc.hpp" />
+    <ClInclude Include="..\src\creatures\npcs\npcs.hpp" />
+    <ClInclude Include="..\src\creatures\npcs\spawns\spawn_npc.hpp" />
     <ClInclude Include="..\src\creatures\players\account\account.hpp" />
-    <ClInclude Include="..\src\creatures\players\grouping\familiars.h" />
-    <ClInclude Include="..\src\creatures\players\grouping\groups.h" />
-    <ClInclude Include="..\src\creatures\players\grouping\guild.h" />
-    <ClInclude Include="..\src\creatures\players\grouping\party.h" />
+    <ClInclude Include="..\src\creatures\players\grouping\familiars.hpp" />
+    <ClInclude Include="..\src\creatures\players\grouping\groups.hpp" />
+    <ClInclude Include="..\src\creatures\players\grouping\guild.hpp" />
+    <ClInclude Include="..\src\creatures\players\grouping\party.hpp" />
     <ClInclude Include="..\src\creatures\players\grouping\team_finder.hpp" />
-    <ClInclude Include="..\src\creatures\players\imbuements\imbuements.h" />
-    <ClInclude Include="..\src\creatures\players\management\ban.h" />
-    <ClInclude Include="..\src\creatures\players\management\waitlist.h" />
-    <ClInclude Include="..\src\creatures\players\player.h" />
-    <ClInclude Include="..\src\creatures\players\vocations\vocation.h" />
-    <ClInclude Include="..\src\database\database.h" />
-    <ClInclude Include="..\src\database\databasemanager.h" />
-    <ClInclude Include="..\src\database\databasetasks.h" />
+    <ClInclude Include="..\src\creatures\players\imbuements\imbuements.hpp" />
+    <ClInclude Include="..\src\creatures\players\management\ban.hpp" />
+    <ClInclude Include="..\src\creatures\players\management\waitlist.hpp" />
+    <ClInclude Include="..\src\creatures\players\storages\storages.hpp" />
+    <ClInclude Include="..\src\creatures\players\player.hpp" />
+    <ClInclude Include="..\src\creatures\players\vocations\vocation.hpp" />
+    <ClInclude Include="..\src\creatures\players\wheel\player_wheel.hpp" />
+    <ClInclude Include="..\src\creatures\players\wheel\wheel_definitions.hpp" />
+    <ClInclude Include="..\src\database\database.hpp" />
+    <ClInclude Include="..\src\database\databasemanager.hpp" />
+    <ClInclude Include="..\src\database\databasetasks.hpp" />
     <ClInclude Include="..\src\database\database_definitions.hpp" />
     <ClInclude Include="..\src\declarations.hpp" />
     <ClInclude Include="..\src\enums\item_attribute.hpp" />
     <ClInclude Include="..\src\game\functions\game_reload.hpp" />
-    <ClInclude Include="..\src\game\game.h" />
+    <ClInclude Include="..\src\game\game.hpp" />
+    <ClInclude Include="..\src\game\bank\bank.hpp" />
+    <ClInclude Include="..\src\game\zones\zone.hpp" />
     <ClInclude Include="..\src\game\game_definitions.hpp" />
-    <ClInclude Include="..\src\game\movement\position.h" />
-    <ClInclude Include="..\src\game\movement\teleport.h" />
+    <ClInclude Include="..\src\game\movement\position.hpp" />
+    <ClInclude Include="..\src\game\movement\teleport.hpp" />
     <ClInclude Include="..\src\game\scheduling\events_scheduler.hpp" />
-    <ClInclude Include="..\src\game\scheduling\scheduler.h" />
-    <ClInclude Include="..\src\game\scheduling\tasks.h" />
-    <ClInclude Include="..\src\io\fileloader.h" />
+    <ClInclude Include="..\src\game\scheduling\scheduler.hpp" />
+    <ClInclude Include="..\src\game\scheduling\dispatcher.hpp" />
+    <ClInclude Include="..\src\game\scheduling\task.hpp" />
+    <ClInclude Include="..\src\io\fileloader.hpp" />
+    <ClInclude Include="..\src\io\filestream.hpp" />
     <ClInclude Include="..\src\io\functions\iologindata_load_player.hpp" />
     <ClInclude Include="..\src\io\functions\iologindata_save_player.hpp" />
-    <ClInclude Include="..\src\io\iobestiary.h" />
-    <ClInclude Include="..\src\io\ioguild.h" />
-    <ClInclude Include="..\src\io\iologindata.h" />
-    <ClInclude Include="..\src\io\iomap.h" />
-    <ClInclude Include="..\src\io\iomapserialize.h" />
-    <ClInclude Include="..\src\io\iomarket.h" />
-    <ClInclude Include="..\src\io\ioprey.h" />
+    <ClInclude Include="..\src\io\io_wheel.hpp" />
+    <ClInclude Include="..\src\io\iobestiary.hpp" />
+    <ClInclude Include="..\src\io\ioguild.hpp" />
+    <ClInclude Include="..\src\io\iologindata.hpp" />
+    <ClInclude Include="..\src\io\iomap.hpp" />
+    <ClInclude Include="..\src\io\iomapserialize.hpp" />
+    <ClInclude Include="..\src\io\iomarket.hpp" />
+    <ClInclude Include="..\src\io\ioprey.hpp" />
     <ClInclude Include="..\src\io\io_bosstiary.hpp" />
     <ClInclude Include="..\src\io\io_definitions.hpp" />
-    <ClInclude Include="..\src\items\bed.h" />
-    <ClInclude Include="..\src\items\containers\container.h" />
-    <ClInclude Include="..\src\items\containers\depot\depotchest.h" />
-    <ClInclude Include="..\src\items\containers\depot\depotlocker.h" />
-    <ClInclude Include="..\src\items\containers\inbox\inbox.h" />
-    <ClInclude Include="..\src\items\containers\mailbox\mailbox.h" />
-    <ClInclude Include="..\src\items\containers\rewards\reward.h" />
-    <ClInclude Include="..\src\items\containers\rewards\rewardchest.h" />
-    <ClInclude Include="..\src\items\cylinder.h" />
-    <ClInclude Include="..\src\items\decay\decay.h" />
+    <ClInclude Include="..\src\items\bed.hpp" />
+    <ClInclude Include="..\src\items\containers\container.hpp" />
+    <ClInclude Include="..\src\items\containers\depot\depotchest.hpp" />
+    <ClInclude Include="..\src\items\containers\depot\depotlocker.hpp" />
+    <ClInclude Include="..\src\items\containers\inbox\inbox.hpp" />
+    <ClInclude Include="..\src\items\containers\mailbox\mailbox.hpp" />
+    <ClInclude Include="..\src\items\containers\rewards\reward.hpp" />
+    <ClInclude Include="..\src\items\containers\rewards\rewardchest.hpp" />
+    <ClInclude Include="..\src\items\cylinder.hpp" />
+    <ClInclude Include="..\src\items\decay\decay.hpp" />
     <ClInclude Include="..\src\items\functions\item\attribute.hpp" />
     <ClInclude Include="..\src\items\functions\item\custom_attribute.hpp" />
     <ClInclude Include="..\src\items\functions\item\item_parse.hpp" />
-    <ClInclude Include="..\src\items\item.h" />
-    <ClInclude Include="..\src\items\items.h" />
+    <ClInclude Include="..\src\items\item.hpp" />
+    <ClInclude Include="..\src\items\items.hpp" />
     <ClInclude Include="..\src\items\items_classification.hpp" />
     <ClInclude Include="..\src\items\items_definitions.hpp" />
-    <ClInclude Include="..\src\items\thing.h" />
-    <ClInclude Include="..\src\items\tile.h" />
-    <ClInclude Include="..\src\items\trashholder.h" />
-    <ClInclude Include="..\src\items\weapons\weapons.h" />
-    <ClInclude Include="..\src\lua\callbacks\creaturecallback.h" />
-    <ClInclude Include="..\src\lua\creature\actions.h" />
-    <ClInclude Include="..\src\lua\creature\creatureevent.h" />
-    <ClInclude Include="..\src\lua\creature\events.h" />
-    <ClInclude Include="..\src\lua\creature\movement.h" />
-    <ClInclude Include="..\src\lua\creature\raids.h" />
-    <ClInclude Include="..\src\lua\creature\talkaction.h" />
+    <ClInclude Include="..\src\items\thing.hpp" />
+    <ClInclude Include="..\src\items\tile.hpp" />
+    <ClInclude Include="..\src\items\trashholder.hpp" />
+    <ClInclude Include="..\src\items\weapons\weapons.hpp" />
+    <ClInclude Include="..\src\lib\di\container.hpp" />
+    <ClInclude Include="..\src\lib\di\soft_singleton.hpp" />
+    <ClInclude Include="..\src\lib\logging\logger.hpp" />
+    <ClInclude Include="..\src\lib\logging\log_with_spd_log.hpp" />
+    <ClInclude Include="..\src\lib\thread\thread_pool.hpp" />
+    <ClInclude Include="..\src\lib\messaging\command.hpp" />
+    <ClInclude Include="..\src\lib\messaging\event.hpp" />
+    <ClInclude Include="..\src\lib\messaging\message.hpp" />
+    <ClInclude Include="..\src\lua\callbacks\creaturecallback.hpp" />
+    <ClInclude Include="..\src\lua\callbacks\event_callback.hpp" />
+    <ClInclude Include="..\src\lua\callbacks\events_callbacks.hpp" />
+    <ClInclude Include="..\src\lua\creature\actions.hpp" />
+    <ClInclude Include="..\src\lua\creature\creatureevent.hpp" />
+    <ClInclude Include="..\src\lua\creature\events.hpp" />
+    <ClInclude Include="..\src\lua\creature\movement.hpp" />
+    <ClInclude Include="..\src\lua\creature\raids.hpp" />
+    <ClInclude Include="..\src\lua\creature\talkaction.hpp" />
     <ClInclude Include="..\src\lua\functions\core\core_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\game\config_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\game\core_game_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\game\game_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\game\global_functions.hpp" />
+    <ClInclude Include="..\src\lua\functions\core\game\bank_functions.hpp" />
+    <ClInclude Include="..\src\lua\functions\core\game\zone_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\game\lua_enums.hpp" />
     <ClInclude Include="..\src\lua\functions\core\game\modal_window_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\libs\bit_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\libs\core_libs_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\libs\db_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\libs\result_functions.hpp" />
-    <ClInclude Include="..\src\lua\functions\core\libs\spdlog_functions.hpp" />
+    <ClInclude Include="..\src\lua\functions\core\libs\logger_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\network\core_network_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\network\network_message_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\core\network\webhook_functions.hpp" />
@@ -137,6 +149,7 @@
     <ClInclude Include="..\src\lua\functions\creatures\player\vocation_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\events\action_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\events\creature_event_functions.hpp" />
+    <ClInclude Include="..\src\lua\functions\events\event_callback_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\events\events_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\events\events_scheduler_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\events\global_event_functions.hpp" />
@@ -155,41 +168,45 @@
     <ClInclude Include="..\src\lua\functions\map\teleport_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\map\tile_functions.hpp" />
     <ClInclude Include="..\src\lua\functions\map\town_functions.hpp" />
-    <ClInclude Include="..\src\lua\global\baseevents.h" />
-    <ClInclude Include="..\src\lua\global\globalevent.h" />
+    <ClInclude Include="..\src\lua\global\baseevents.hpp" />
+    <ClInclude Include="..\src\lua\global\globalevent.hpp" />
     <ClInclude Include="..\src\lua\lua_definitions.hpp" />
-    <ClInclude Include="..\src\lua\modules\modules.h" />
+    <ClInclude Include="..\src\lua\modules\modules.hpp" />
     <ClInclude Include="..\src\lua\scripts\luajit_sync.hpp" />
-    <ClInclude Include="..\src\lua\scripts\luascript.h" />
+    <ClInclude Include="..\src\lua\scripts\luascript.hpp" />
     <ClInclude Include="..\src\lua\scripts\lua_environment.hpp" />
-    <ClInclude Include="..\src\lua\scripts\scripts.h" />
+    <ClInclude Include="..\src\lua\scripts\scripts.hpp" />
     <ClInclude Include="..\src\lua\scripts\script_environment.hpp" />
-    <ClInclude Include="..\src\map\house\house.h" />
-    <ClInclude Include="..\src\map\house\housetile.h" />
-    <ClInclude Include="..\src\map\map.h" />
+    <ClInclude Include="..\src\map\house\house.hpp" />
+    <ClInclude Include="..\src\map\house\housetile.hpp" />
+    <ClInclude Include="..\src\map\map.hpp" />
+    <ClInclude Include="..\src\map\mapcache.hpp" />
+    <ClInclude Include="..\src\map\map_const.hpp" />
     <ClInclude Include="..\src\map\map_definitions.hpp" />
-    <ClInclude Include="..\src\map\town.h" />
-    <ClInclude Include="..\src\protobuf\appearances.pb.h" />
-    <ClInclude Include="..\src\security\rsa.h" />
-    <ClInclude Include="..\src\server\network\connection\connection.h" />
-    <ClInclude Include="..\src\server\network\message\networkmessage.h" />
-    <ClInclude Include="..\src\server\network\message\outputmessage.h" />
-    <ClInclude Include="..\src\server\network\protocol\protocol.h" />
-    <ClInclude Include="..\src\server\network\protocol\protocolgame.h" />
-    <ClInclude Include="..\src\server\network\protocol\protocollogin.h" />
-    <ClInclude Include="..\src\server\network\protocol\protocolstatus.h" />
-    <ClInclude Include="..\src\server\network\webhook\webhook.h" />
-    <ClInclude Include="..\src\server\server.h" />
+    <ClInclude Include="..\src\map\town.hpp" />
+    <ClInclude Include="..\src\map\utils\astarnodes.hpp" />
+    <ClInclude Include="..\src\map\utils\qtreenode.hpp" />
+    <ClInclude Include="..\src\protobuf\appearances.pb.hpp" />
+    <ClInclude Include="..\src\security\rsa.hpp" />
+    <ClInclude Include="..\src\server\network\connection\connection.hpp" />
+    <ClInclude Include="..\src\server\network\message\networkmessage.hpp" />
+    <ClInclude Include="..\src\server\network\message\outputmessage.hpp" />
+    <ClInclude Include="..\src\server\network\protocol\protocol.hpp" />
+    <ClInclude Include="..\src\server\network\protocol\protocolgame.hpp" />
+    <ClInclude Include="..\src\server\network\protocol\protocollogin.hpp" />
+    <ClInclude Include="..\src\server\network\protocol\protocolstatus.hpp" />
+    <ClInclude Include="..\src\server\network\webhook\webhook.hpp" />
+    <ClInclude Include="..\src\server\server.hpp" />
     <ClInclude Include="..\src\server\server_definitions.hpp" />
-    <ClInclude Include="..\src\server\signals.h" />
+    <ClInclude Include="..\src\server\signals.hpp" />
     <ClInclude Include="..\src\utils\const.hpp" />
-    <ClInclude Include="..\src\utils\definitions.h" />
-    <ClInclude Include="..\src\utils\pugicast.h" />
+    <ClInclude Include="..\src\utils\definitions.hpp" />
+    <ClInclude Include="..\src\utils\hash.hpp" />
+    <ClInclude Include="..\src\utils\pugicast.hpp" />
     <ClInclude Include="..\src\utils\simd.hpp" />
-    <ClInclude Include="..\src\utils\thread_holder_base.h" />
-    <ClInclude Include="..\src\utils\tools.h" />
+    <ClInclude Include="..\src\utils\tools.hpp" />
     <ClInclude Include="..\src\utils\utils_definitions.hpp" />
-    <ClInclude Include="..\src\utils\wildcardtree.h" />
+    <ClInclude Include="..\src\utils\wildcardtree.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\config\configmanager.cpp" />
@@ -214,21 +231,27 @@
     <ClCompile Include="..\src\creatures\players\imbuements\imbuements.cpp" />
     <ClCompile Include="..\src\creatures\players\management\ban.cpp" />
     <ClCompile Include="..\src\creatures\players\management\waitlist.cpp" />
+    <ClCompile Include="..\src\creatures\players\storages\storages.cpp" />
     <ClCompile Include="..\src\creatures\players\player.cpp" />
     <ClCompile Include="..\src\creatures\players\vocations\vocation.cpp" />
+    <ClCompile Include="..\src\creatures\players\wheel\player_wheel.cpp" />
     <ClCompile Include="..\src\database\database.cpp" />
     <ClCompile Include="..\src\database\databasemanager.cpp" />
     <ClCompile Include="..\src\database\databasetasks.cpp" />
     <ClCompile Include="..\src\game\functions\game_reload.cpp" />
     <ClCompile Include="..\src\game\game.cpp" />
+    <ClCompile Include="..\src\game\bank\bank.cpp" />
+    <ClCompile Include="..\src\game\zones\zone.cpp" />
     <ClCompile Include="..\src\game\movement\position.cpp" />
     <ClCompile Include="..\src\game\movement\teleport.cpp" />
     <ClCompile Include="..\src\game\scheduling\events_scheduler.cpp" />
     <ClCompile Include="..\src\game\scheduling\scheduler.cpp" />
-    <ClCompile Include="..\src\game\scheduling\tasks.cpp" />
+    <ClCompile Include="..\src\game\scheduling\dispatcher.cpp" />
     <ClCompile Include="..\src\io\fileloader.cpp" />
+    <ClCompile Include="..\src\io\filestream.cpp" />
     <ClCompile Include="..\src\io\functions\iologindata_load_player.cpp" />
     <ClCompile Include="..\src\io\functions\iologindata_save_player.cpp" />
+    <ClCompile Include="..\src\io\io_wheel.cpp" />
     <ClCompile Include="..\src\io\iobestiary.cpp" />
     <ClCompile Include="..\src\io\ioguild.cpp" />
     <ClCompile Include="..\src\io\iologindata.cpp" />
@@ -256,7 +279,12 @@
     <ClCompile Include="..\src\items\tile.cpp" />
     <ClCompile Include="..\src\items\trashholder.cpp" />
     <ClCompile Include="..\src\items\weapons\weapons.cpp" />
+    <ClCompile Include="..\src\lib\di\soft_singleton.cpp" />
+    <ClCompile Include="..\src\lib\logging\log_with_spd_log.cpp" />
+    <ClCompile Include="..\src\lib\thread\thread_pool.cpp" />
     <ClCompile Include="..\src\lua\callbacks\creaturecallback.cpp" />
+    <ClCompile Include="..\src\lua\callbacks\event_callback.cpp" />
+    <ClCompile Include="..\src\lua\callbacks\events_callbacks.cpp" />
     <ClCompile Include="..\src\lua\creature\actions.cpp" />
     <ClCompile Include="..\src\lua\creature\creatureevent.cpp" />
     <ClCompile Include="..\src\lua\creature\events.cpp" />
@@ -266,12 +294,14 @@
     <ClCompile Include="..\src\lua\functions\core\game\config_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\game\game_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\game\global_functions.cpp" />
+    <ClCompile Include="..\src\lua\functions\core\game\bank_functions.cpp" />
+    <ClCompile Include="..\src\lua\functions\core\game\zone_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\game\lua_enums.cpp" />
     <ClCompile Include="..\src\lua\functions\core\game\modal_window_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\libs\bit_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\libs\db_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\libs\result_functions.cpp" />
-    <ClCompile Include="..\src\lua\functions\core\libs\spdlog_functions.cpp" />
+    <ClCompile Include="..\src\lua\functions\core\libs\logger_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\network\network_message_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\core\network\webhook_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\creatures\combat\combat_functions.cpp" />
@@ -295,6 +325,7 @@
     <ClCompile Include="..\src\lua\functions\creatures\player\vocation_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\events\action_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\events\creature_event_functions.cpp" />
+    <ClCompile Include="..\src\lua\functions\events\event_callback_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\events\events_scheduler_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\events\global_event_functions.cpp" />
     <ClCompile Include="..\src\lua\functions\events\move_event_functions.cpp" />
@@ -320,9 +351,14 @@
     <ClCompile Include="..\src\lua\scripts\script_environment.cpp" />
     <ClCompile Include="..\src\map\house\house.cpp" />
     <ClCompile Include="..\src\map\house\housetile.cpp" />
+    <ClCompile Include="..\src\map\utils\astarnodes.cpp" />
+    <ClCompile Include="..\src\map\utils\qtreenode.cpp" />
     <ClCompile Include="..\src\map\map.cpp" />
-    <ClCompile Include="..\src\otserv.cpp" />
+    <ClCompile Include="..\src\map\mapcache.cpp" />
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\canary_server.cpp" />
     <ClCompile Include="..\src\protobuf\appearances.pb.cc" />
+    <ClCompile Include="..\src\security\argon.cpp" />
     <ClCompile Include="..\src\security\rsa.cpp" />
     <ClCompile Include="..\src\server\network\connection\connection.cpp" />
     <ClCompile Include="..\src\server\network\message\networkmessage.cpp" />
@@ -338,13 +374,8 @@
     <ClCompile Include="..\src\utils\wildcardtree.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\src\CMakeLists.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="..\src\pch.hpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
@@ -355,218 +386,135 @@
     <ProjectGuid>{7AA6C5AC-C8C4-40EF-A0B3-3569B9819163}</ProjectGuid>
     <RootNamespace>Canary</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
-    <OutDir>..\</OutDir>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <OutDir>$(ProjectDir)../</OutDir>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <CharacterSet>Unicode</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <PlatformToolset>v143</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PlatformToolset>v143</PlatformToolset>
     <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <EnableUnitySupport>true</EnableUnitySupport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <PlatformToolset>v143</PlatformToolset>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <EnableUnitySupport>true</EnableUnitySupport>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+  <Import Project="settings.props" />
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
   </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
-  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" />
-  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.21006.1</_ProjectFileVersion>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkIncremental>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
-    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
-    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
-    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(LibraryPath)</LibraryPath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath)</LibraryPath>
-    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IncludePath)</IncludePath>
     <IncludePath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(IncludePath)</IncludePath>
-    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(LibraryPath)</LibraryPath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath)</LibraryPath>
     <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>..\src;$(IncludePath)</IncludePath>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)-sln-dbg</TargetName>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <TargetName>$(ProjectName)_x32</TargetName>
-    <IncludePath>..\src;$(IncludePath)</IncludePath>
-    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>$(ProjectName)-sln</TargetName>
   </PropertyGroup>
   <PropertyGroup Label="Vcpkg">
-    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgEnableManifest>false</VcpkgEnableManifest>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
   </PropertyGroup>
-  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <VcpkgInstalledDir>..\vcproj\vcpkg_installed\</VcpkgInstalledDir>
+  <PropertyGroup Label="Vcpkg" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <VcpkgInstalledDir>vcpkg_installed</VcpkgInstalledDir>
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
+    <VcpkgConfiguration>Release</VcpkgConfiguration>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <ClCompile>
-      <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CRTDBG_MAP_ALLOC;__DEBUG__;WXUSINGDLL;wxMSVC_VERSION_AUTO;__EXPERIMENTAL__;LIVE_SERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <MinimalRebuild>true</MinimalRebuild>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>comctl32.lib;Rpcrt4.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\dependencies\vs\lib\</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>$(TargetName).map</MapFileName>
-      <MapExports>true</MapExports>
-      <SubSystem>Windows</SubSystem>
-      <TargetMachine>MachineX86</TargetMachine>
-      <IgnoreSpecificDefaultLibraries>wxscintillad.lib</IgnoreSpecificDefaultLibraries>
-    </Link>
-  </ItemDefinitionGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Vcpkg">
+    <VcpkgInstalledDir>vcpkg_installed</VcpkgInstalledDir>
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_CRTDBG_MAP_ALLOC;__DEBUG__;WXUSINGDLL;wxMSVC_VERSION_AUTO;__EXPERIMENTAL__;LIVE_SERVER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <RuntimeTypeInfo>true</RuntimeTypeInfo>
-      <AdditionalOptions>/bigobj %(AdditionalOptions)</AdditionalOptions>
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>comctl32.lib;Rpcrt4.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\dependencies\vs\lib\</AdditionalLibraryDirectories>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <GenerateMapFile>true</GenerateMapFile>
-      <MapFileName>$(TargetName).map</MapFileName>
-      <MapExports>true</MapExports>
-      <SubSystem>Windows</SubSystem>
-      <IgnoreSpecificDefaultLibraries>wxscintillad.lib</IgnoreSpecificDefaultLibraries>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <Optimization>Full</Optimization>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;__RELEASE__;WXUSINGDLL;wxMSVC_VERSION_AUTO;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
-      <WarningLevel>Level3</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <PrecompiledHeaderFile />
-    </ClCompile>
-    <Link>
-      <AdditionalDependencies>comctl32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <SubSystem>Windows</SubSystem>
-      <LargeAddressAware>true</LargeAddressAware>
-      <OptimizeReferences>true</OptimizeReferences>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <TargetMachine>MachineX86</TargetMachine>
-      <AdditionalLibraryDirectories>
-      </AdditionalLibraryDirectories>
-    </Link>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <Optimization>Full</Optimization>
-      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>NDEBUG;__RELEASE__;WXUSINGDLL;wxMSVC_VERSION_AUTO;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-      <FunctionLevelLinking>false</FunctionLevelLinking>
+      <AdditionalIncludeDirectories>
+      $(VcpkgRoot)\installed\$(VcpkgTriplet)\include\;
+      vcpkg_installed\$(VcpkgTriplet)\include\
+      </AdditionalIncludeDirectories>
       <WarningLevel>Level1</WarningLevel>
-      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <BufferSecurityCheck>false</BufferSecurityCheck>
-      <AdditionalOptions>-Zm114 %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalUsingDirectories>
-      </AdditionalUsingDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeaderFile />
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <IncludeInUnityFile>true</IncludeInUnityFile>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>comctl32.lib;WS2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
-      <LargeAddressAware>true</LargeAddressAware>
+      <AdditionalLibraryDirectories>
+      $(VcpkgRoot)\installed\$(VcpkgTriplet)\lib\;
+      vcpkg_installed\$(VcpkgTriplet)\lib\
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <GenerateMapFile>false</GenerateMapFile>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalLibraryDirectories>$(SolutionDir)..\dependencies\vs\lib\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>$(CANARY_LIBDEPS)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>
+      $(VcpkgRoot)\installed\$(VcpkgTriplet)\include\;
+      vcpkg_installed\$(VcpkgTriplet)\include\
+      </AdditionalIncludeDirectories>
+      <WarningLevel>Level1</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp20</LanguageStandard>
       <PrecompiledHeaderFile />
+      <SupportJustMyCode>true</SupportJustMyCode>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <WholeProgramOptimization>true</WholeProgramOptimization>
+      <IncludeInUnityFile>true</IncludeInUnityFile>
+      <OpenMPSupport>true</OpenMPSupport>
     </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <LanguageStandard>stdcpp20</LanguageStandard>
-      <PrecompiledHeaderFile />
-    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>
+      $(VcpkgRoot)\installed\$(VcpkgTriplet)\lib\;
+      vcpkg_installed\$(VcpkgTriplet)\lib\
+      </AdditionalLibraryDirectories>
+      <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
+      <GenerateMapFile>false</GenerateMapFile>
+      <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+    </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

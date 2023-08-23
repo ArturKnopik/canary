@@ -79,7 +79,8 @@ Reserved player action storage key ranges (const.h)
 
 Storage = {
 	-- General storages
-	isTraining = 30000,
+	IsTraining = 30000,
+	-- Reserved in Global.Storage.NpcExhaust = 30001
 	Dragonfetish = 30003,
 	EdronRopeQuest = 30004,
 	GhostShipQuest = 30005,
@@ -89,8 +90,8 @@ Storage = {
 	EmoteSpells = 30008,
 	WagonTicket = 30009,
 	BloodHerbQuest = 30010,
-	firstMageWeapon = 30011,
-	toOutfoxAFoxQuest = 30012,
+	FirstMageWeapon = 30011,
+	ToOutfoxAFoxQuest = 30012,
 	KawillBlessing = 30014,
 	RentedHorseTimer = 30015,
 	FountainOfLife = 30016,
@@ -101,10 +102,12 @@ Storage = {
 	RookgaardDestiny = 30020,
 	EruaranGreeting = 30021,
 	MaryzaCookbook = 30022,
+	-- Reserved in Global.Storage.CombatProtectionStorage = 30023
 	Factions = 30024,
-	blockMovementStorage = 30025,
-	TrainerRoom = 30027,
-	NpcSpawn = 30028,
+	-- Reserved in Global.Storage.BlockMovementStorage = 30025
+	-- Reserved in Global.Storage.FamiliarSummon = 30026
+	-- unused TrainerRoom = 30027,
+	-- unused NpcSpawn = 30028,
 	ExerciseDummyExhaust = 30029,
 	SamsOldBackpack = 30030,
 	SamsOldBackpackDoor = 30031,
@@ -127,8 +130,11 @@ Storage = {
 	Navigator = 30048,
 	DwarvenLegs = 30049,
 	PrinceDrazzakTime = 30050,
+	-- Reserved in Global.Storage.StoreExaust = 30051
 	LemonCupcake = 30052,
 	BlueberryCupcake = 30053,
+	-- Reserved in Global.Storage.FamiliarSummonEvent10 = 30054
+	-- Reserved in Global.Storage.FamiliarSummonEvent60 = 30055
 	ChayenneKeyTime = 30056,
 	FreeQuests = 30057,
 	PremiumAccount = 30058,
@@ -387,7 +393,7 @@ Storage = {
 			Objects = 50230,
 			Temp = 50231,
 			BossTimer = 50232,
-			TrialAccessDoor = 50233,
+			TrialAccessDoor = 50243, -- 50233 is used by an ore wagon
 			TarAccessDoor = 50234,
 			AccessDoor = 50235,
 			BossAccessDoor = 50236
@@ -597,7 +603,7 @@ Storage = {
 		Mission05 = 50604,
 		Mission06 = 50605,
 		Mission07 = 50606,
-		packageDoor = 50607
+		-- unused packageDoor = 50607
 	},
 	DjinnWar = {
 		-- Reserved storage from 50620 - 50649
@@ -1123,18 +1129,18 @@ Storage = {
 		GhostOfAPriest03 = 51319, --1072
 		InterdimensionalPotion = 51320, --1084
 		BossStatus = 51321, --1090
-		platinumReward = 51322,
-		backpackReward = 51323,
-		mainReward = 51324,
+		-- unused platinumReward = 51322,
+		-- unused backpackReward = 51323,
+		MainReward = 51324,
 		TeleportAccess = {
 			Rebel = 51325,
 			Zlak = 51326,
 			Zizzle = 51327,
-			sleepingDragon = 51328,
-			innerSanctum = 51329,
-			awarnessEmperor = 51330,
+			SleepingDragon = 51328,
+			InnerSanctum = 51329,
+			AwarnessEmperor = 51330,
 			Wote10 = 51331,
-			bossRoom = 51332
+			BossRoom = 51332
 		}
 	},
 	FriendsandTraders = {
@@ -1233,7 +1239,7 @@ Storage = {
 	TibiaTales = {
 		-- Reserved storage from 51480 - 51539
 		DefaultStart = 51480,
-		ultimateBoozeQuest = 51481,
+		UltimateBoozeQuest = 51481,
 		AgainstTheSpiderCult = 51482,
 		AnInterestInBotany = 51483,
 		AnInterestInBotanyChestDoor = 51484,
@@ -1346,12 +1352,12 @@ Storage = {
 	},
 	RookgaardTutorialIsland = {
 		-- Reserved storage from 51660 - 51679
-		tutorialHintsStorage = 51665,
+		TutorialHintsStorage = 51665,
 		SantiagoNpcGreetStorage = 51666,
 		SantiagoQuestLog = 51667,
-		cockroachKillStorage = 51668,
-		cockroachLegsMsgStorage = 51669,
-		cockroachBodyMsgStorage = 51670,
+		-- unused cockroachKillStorage = 51668,
+		-- unused cockroachLegsMsgStorage = 51669,
+		-- unused cockroachBodyMsgStorage = 51670,
 		ZirellaNpcGreetStorage = 51671,
 		ZirellaQuestLog = 51672,
 		CarlosNpcTradeStorage = 51673,
@@ -1666,7 +1672,6 @@ Storage = {
 		KnightHealthPotion = 52266,
 		KnightManaPotion = 52267,
 		KnightMeat = 52268,
-
 		Sorcerer = 52269,
 		Druid = 52270,
 		Paladin = 52271,
@@ -2672,15 +2677,15 @@ Storage = {
 					keyFragment01 = 45978,
 					keyFragment02 = 45979
 				},
-				corymRescued01 = 45980,
-				corymRescued02 = 45981,
-				corymRescued03 = 45982,
-				corymRescued04 = 45983,
-				corymRescued05 = 45984,
-				corymRescued06 = 45985,
-				corymRescued07 = 45986,
-				corymRescued08 = 45987,
-				corymRescueMission = 45988
+				CorymRescued01 = 45980,
+				CorymRescued02 = 45981,
+				CorymRescued03 = 45982,
+				CorymRescued04 = 45983,
+				CorymRescued05 = 45984,
+				CorymRescued06 = 45985,
+				CorymRescued07 = 45986,
+				CorymRescued08 = 45987,
+				CorymRescueMission = 45988
 			},
 			MakeshiftWarriorOutfits = {},
 		},
@@ -2768,6 +2773,7 @@ Storage = {
 					KingZelosDoor = 46875,
 					KingZelosTimer = 46876,
 					KingZelosKilled = 46877,
+					InquisitionOutfitReceived = 46878,
 				},
 				Cobra = 46864
 			},
@@ -2793,7 +2799,9 @@ Storage = {
 				PaleWormTimer = 47018,
 				PaleWormKilled = 47019,
 			},
-			PoltergeistOutfits = {}
+			PoltergeistOutfits = {
+				Received = 47020,
+			}
 		},
 		U12_40 = { -- update 12.40 - Reserved Storages 47201 - 47500
 			RevenantOutfits = {},
@@ -2837,11 +2845,42 @@ Storage = {
 			},
 			CitizenOfIssaviOutfits = {},
 			RoyalBounaceanAdvisorOutfits = {},
-			TooHotToHandle = {}
+			TooHotToHandle = {
+				BrainstealerTimer = 47611,
+			}
 		},
 		U12_80 = { -- update 12.80 - Reserved Storages 47801 - 47850
 			RoyalCostumeOutfits = {}
 		},
+		U12_90 = { -- update 12.90 - Reserved Storages 47851 - 47900
+			PrimalOrdeal = {
+				QuestLine = 47851,
+				Hazard = {
+					Current = 47856,
+					Max = 47857,
+				},
+				Bosses = {
+					MagmaBubbleTimer = 47852,
+					MagmaBubbleKilled = 47853,
+					ThePrimalMenaceTimer = 47854,
+					ThePrimalMenaceKilled = 47855,
+				},
+			},
+			WithinTheTides = {
+				TimiraTimer = 47858,
+			}
+		},
+		U13_10 = { -- update 13.10 - Reserved Storages 47901 - 47951
+			CradleOfMonsters = {
+				QuestLine = 47901,
+				Access = {
+					Ingol = 47902,
+					LowerIngol = 47903,
+					Monster = 47904,
+					MutatedAbomination = 47905,
+				},
+			}
+		}
 	},
 	-- Reserved storage from 63951 - 63999
 	ThaisExhibition = {
@@ -2872,6 +2911,97 @@ Storage = {
 		OrcsJawShredder = 63975,
 		BagOfOrientalSpices = 63976,
 		TibiorasBox = 63977
+	},
+
+	-- Reserved storage from 64000 - 64099
+	TibiaDrome = {
+		-- General Upgrades
+		BestiaryBetterment = {
+			TimeLeft = 64000,
+			LastActivatedAt = 64001,
+		},
+		CharmUpgrade = {
+			TimeLeft = 64002,
+			LastActivatedAt = 64003,
+		},
+		KooldownAid = {
+			LastActivatedAt = 64005,
+		},
+		StaminaExtension = {
+			LastActivatedAt = 64007,
+		},
+		StrikeEnhancement = {
+			TimeLeft = 64008,
+			LastActivatedAt = 64009,
+		},
+		WealthDuplex = {
+			TimeLeft = 64010,
+			LastActivatedAt = 64011,
+		},
+		-- Resilience
+		FireResilience = {
+			TimeLeft = 64012,
+			LastActivatedAt = 64013,
+		},
+		IceResilience = {
+			TimeLeft = 64014,
+			LastActivatedAt = 64015,
+		},
+		EarthResilience = {
+			TimeLeft = 64016,
+			LastActivatedAt = 64017,
+		},
+		EnergyResilience = {
+			TimeLeft = 64018,
+			LastActivatedAt = 64019,
+		},
+		HolyResilience = {
+			TimeLeft = 64020,
+			LastActivatedAt = 64021,
+		},
+		DeathResilience = {
+			TimeLeft = 64022,
+			LastActivatedAt = 64023,
+		},
+		PhysicalResilience = {
+			TimeLeft = 64024,
+			LastActivatedAt = 64025,
+		},
+		-- Amplifications
+		FireAmplification = {
+			TimeLeft = 64026,
+			LastActivatedAt = 64027,
+		},
+		IceAmplification = {
+			TimeLeft = 64028,
+			LastActivatedAt = 64029,
+		},
+		EarthAmplification = {
+			TimeLeft = 64030,
+			LastActivatedAt = 64031,
+		},
+		EnergyAmplification = {
+			TimeLeft = 64032,
+			LastActivatedAt = 64033,
+		},
+		HolyAmplification = {
+			TimeLeft = 64034,
+			LastActivatedAt = 64035,
+		},
+		DeathAmplification = {
+			TimeLeft = 64036,
+			LastActivatedAt = 64037,
+		},
+		PhysicalAmplification = {
+			TimeLeft = 64038,
+			LastActivatedAt = 64039,
+		},
+	},
+
+	VipSystem = {
+		IsVip = 150001,
+		OnlineCoinsGain = 150002,
+		OnlineTokensGain = 150003,
 	},
 }
 
@@ -3075,9 +3205,9 @@ table.sort(extraction) -- Sort the table
 -- Scroll through the extracted table for duplicates
 if #extraction > 1 then
 	for i = 1, #extraction - 1 do
-		if extraction[i] == extraction[i+1] then
-			Spdlog.warn(string.format("Duplicate storage value found: %d",
-				extraction[i]))
+		if extraction[i] == extraction[i + 1] then
+			logger.warn("Duplicate storage value found: {}",
+				extraction[i])
 		end
 	end
 end

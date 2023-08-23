@@ -46,7 +46,7 @@ QuestDoorAction = {
 		itemPos = {{x = 32455, y = 31967, z = 14}}
 	},
 	-- To Outfox a Fox Quest, mining helmet door
-	[Storage.toOutfoxAFoxQuest] = {
+	[Storage.ToOutfoxAFoxQuest] = {
 		itemId = false,
 		itemPos = {{x = 32467, y = 31969, z = 5}}
 	},
@@ -888,7 +888,32 @@ QuestDoorAction = {
 		itemPos = {
 			{ x = 32422, y = 32499, z = 8 }
 		}
-	}
+	},
+	[Storage.Quest.U13_10.CradleOfMonsters.Access.LowerIngol] = {
+		itemId = false,
+		itemPos = {
+			{ x = 33796, y = 32561, z = 8 },
+			{ x = 33796, y = 32561, z = 9 },
+			{ x = 33796, y = 32573, z = 9 },
+			{ x = 33796, y = 32573, z = 10 },
+			{ x = 33796, y = 32561, z = 10 },
+			{ x = 33796, y = 32561, z = 11 },
+			{ x = 33796, y = 32573, z = 11 },
+			{ x = 33796, y = 32573, z = 12 },
+		}
+	},
+	[Storage.Quest.U13_10.CradleOfMonsters.Access.Monster] = {
+		itemId = false,
+		itemPos = {
+			{ x = 33791, y = 32576, z = 12 },
+		}
+	},
+	[Storage.Quest.U13_10.CradleOfMonsters.Access.MutatedAbomination] = {
+		itemId = false,
+		itemPos = {
+			{ x = 33782, y = 32576, z = 12 },
+		}
+	},
 }
 
 QuestDoorUnique = {

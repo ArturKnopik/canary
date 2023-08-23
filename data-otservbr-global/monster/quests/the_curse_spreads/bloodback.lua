@@ -1,7 +1,7 @@
 local mType = Game.createMonsterType("Bloodback")
 local monster = {}
 
-monster.description = "a Bloodback"
+monster.description = "Bloodback"
 monster.experience = 4000
 monster.outfit = {
 	lookType = 1039,
@@ -27,7 +27,8 @@ monster.changeTarget = {
 
 monster.bosstiary = {
 	bossRaceId = 1560,
-	bossRace = RARITY_ARCHFOE
+	bossRace = RARITY_ARCHFOE,
+	storageCooldown = Storage.Quest.U10_80.Grimvale.BloodbackTimer,
 }
 
 monster.strategiesTarget = {
